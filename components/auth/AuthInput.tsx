@@ -1,6 +1,6 @@
 import React from 'react';
 import { AiFillLock, AiOutlineMail } from 'react-icons/ai';
-import { ActionType } from '../types/AuthTypes';
+import { ActionType } from '../../types/AuthTypes';
 
 interface AuthInputProps {
   placeholder: string;
@@ -21,7 +21,7 @@ export default function AuthInput({
     dispatch({ type: `SET_${name}`, data: value });
   };
   return (
-    <div className="flex items-center mb-8  border-indigo-100 border-2 border-solid py-1 px-4">
+    <div className="flex items-center mb-4  border-indigo-100 border-2 border-solid py-1 px-4">
       <div className="text-2xl text-indigo-300 mr-3">
         {isEmail ? <AiOutlineMail /> : <AiFillLock />}
       </div>
@@ -29,8 +29,8 @@ export default function AuthInput({
         name={name}
         value={text}
         placeholder={placeholder}
-        className="w-full outline-none text-indigo-400"
-        type="text"
+        className="placeholder:text-xs w-full outline-none text-indigo-400"
+        type={name.toLowerCase()}
         onChange={handleChange}
         required
       />

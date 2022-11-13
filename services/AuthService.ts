@@ -17,7 +17,11 @@ export default class AuthServiceImpl implements AuthService {
       if (error instanceof AxiosError) {
         const { response } = error;
         if (response) {
-          throw new HTTPError(response?.status, response?.statusText);
+          throw new HTTPError(
+            response?.status,
+            response?.statusText,
+            response.data
+          );
         }
       }
     }
@@ -32,13 +36,16 @@ export default class AuthServiceImpl implements AuthService {
         userInfo
       );
       const { data } = response;
-      console.log(response);
       return data;
     } catch (error) {
       if (error instanceof AxiosError) {
         const { response } = error;
         if (response) {
-          throw new HTTPError(response?.status, response?.statusText);
+          throw new HTTPError(
+            response?.status,
+            response.statusText,
+            response.data
+          );
         }
       }
     }

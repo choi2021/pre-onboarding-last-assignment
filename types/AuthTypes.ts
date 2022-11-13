@@ -5,6 +5,8 @@ export type ActionType =
 export type UserInfoType = {
   email: string;
   password: string;
+  emailValid: boolean;
+  passwordValid: boolean;
 };
 
 export type AuthResponse = {
