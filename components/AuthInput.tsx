@@ -1,6 +1,6 @@
 import React from 'react';
 import { AiFillLock, AiOutlineMail } from 'react-icons/ai';
-import { ActionType } from '../models/authtypes';
+import { ActionType } from '../types/AuthTypes';
 
 interface AuthInputProps {
   placeholder: string;
@@ -32,6 +32,7 @@ export default function AuthInput({
         className="w-full outline-none text-indigo-400"
         type="text"
         onChange={handleChange}
+        required
       />
     </div>
   );

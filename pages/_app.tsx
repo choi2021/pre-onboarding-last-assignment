@@ -1,8 +1,18 @@
 import type { AppProps } from 'next/app';
+import { AuthProvider } from '../context/AuthContext';
+import HttpClient from '../network/httpClient';
+import AuthServiceImpl from '../services/AuthService';
 import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+function App({ Component, pageProps }: AppProps) {
+  const client = new HttpClient(process.env.BASE_URL || '');
+  const authService = new AuthServiceImpl(client.httpClient);
+
+  return (
+    <AuthProvider authService={authService}>
+      <Component {...pageProps} />;
+    </AuthProvider>
+  );
 }
 
-export default MyApp;
+export default App;
