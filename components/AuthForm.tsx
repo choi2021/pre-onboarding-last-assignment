@@ -1,9 +1,29 @@
 import React, { useReducer } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
-import { ActionType, UserInfoType } from '../types/AuthTypes';
-import { authReducer } from '../utils/authReducer';
 import AuthInput from './AuthInput';
+import { ActionType, UserInfoType } from '../types/AuthTypes';
+
+const SIGN_IN_URL = '/signin';
+const SIGN_UP_URL = 'signup';
+
+const ACTION_CONST = {
+  SET_EMAIL: 'SET_EMAIL',
+  SET_PASSWORD: 'SET_PASSWORD',
+} as const;
+
+const authReducer = (state: UserInfoType, action: ActionType) => {
+  switch (action.type) {
+    case ACTION_CONST.SET_EMAIL:
+      return { ...state, email: action.data };
+    case ACTION_CONST.SET_PASSWORD:
+      return { ...state, password: action.data };
+    default:
+      throw new Error('Unknown Action');
+  }
+};
 
 const EMAIL_INPUT = {
   name: 'EMAIL',
@@ -18,11 +38,17 @@ const PASSWORD_INPUT = {
 const initialState: UserInfoType = { email: '', password: '' };
 
 export default function AuthForm() {
+  const { pathname } = useRouter();
+  const isLogin = pathname === SIGN_IN_URL;
   const [userInfo, dispatch] = useReducer(authReducer, initialState);
   const authService = useAuth();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const signup = authService?.signUp(userInfo);
+    if (isLogin) {
+      authService?.signIn(userInfo).then((data) => console.log(data));
+    } else {
+      authService?.signUp(userInfo).then((data) => console.log(data));
+    }
   };
   return (
     <form
@@ -56,6 +82,12 @@ export default function AuthForm() {
           Login
         </button>
       </section>
+      <Link
+        href={isLogin ? SIGN_UP_URL : SIGN_IN_URL}
+        className="text-sm text-indigo-500 self-center mt-5"
+      >
+        <span>{isLogin ? '회원가입' : '로그인'}하러 가기</span>
+      </Link>
     </form>
   );
 }

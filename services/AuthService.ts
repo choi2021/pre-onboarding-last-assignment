@@ -5,11 +5,11 @@ import { AuthResponse, AuthService, UserInfoType } from '../types/AuthTypes';
 export default class AuthServiceImpl implements AuthService {
   constructor(private httpClient: AxiosInstance) {}
 
-  signUp = async (userInfo: UserInfoType) => {
+  async signUp({ email, password }: UserInfoType) {
     try {
       const response = await this.httpClient.post<AuthResponse>(
-        'signup',
-        userInfo
+        '/users/signup',
+        { email, password }
       );
       const { data } = response;
       return data;
@@ -23,15 +23,16 @@ export default class AuthServiceImpl implements AuthService {
     }
 
     throw new Error('Server Error');
-  };
+  }
 
-  signIn = async (userInfo: UserInfoType) => {
+  async signIn(userInfo: UserInfoType) {
     try {
       const response = await this.httpClient.post<AuthResponse>(
-        'signin',
+        '/login',
         userInfo
       );
       const { data } = response;
+      console.log(response);
       return data;
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -43,5 +44,5 @@ export default class AuthServiceImpl implements AuthService {
     }
 
     throw new Error('Server Error');
-  };
+  }
 }

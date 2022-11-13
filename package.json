@@ -10,6 +10,7 @@
     "postinstall": "husky install",
     "format": "prettier --cache --write ."
   },
+  "proxy": "http://localhost:4000",
   "dependencies": {
     "@tanstack/react-query": "^4.15.0",
     "@types/node": "18.11.9",

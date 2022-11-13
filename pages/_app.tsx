@@ -5,9 +5,8 @@ import AuthServiceImpl from '../services/AuthService';
 import '../styles/globals.css';
 
 function App({ Component, pageProps }: AppProps) {
-  const client = new HttpClient(process.env.BASE_URL || '');
+  const client = new HttpClient(process.env.NEXT_PUBLIC_BASE_URL || '');
   const authService = new AuthServiceImpl(client.httpClient);
-
   return (
     <AuthProvider authService={authService}>
       <Component {...pageProps} />;
