@@ -1,0 +1,38 @@
+import React from 'react';
+import { AiFillLock, AiOutlineMail } from 'react-icons/ai';
+import { ActionType } from '../models/authtypes';
+
+interface AuthInputProps {
+  placeholder: string;
+  text: string;
+  name: 'EMAIL' | 'PASSWORD';
+  dispatch: React.Dispatch<ActionType>;
+}
+
+export default function AuthInput({
+  placeholder,
+  text,
+  name,
+  dispatch,
+}: AuthInputProps) {
+  const isEmail = name === 'EMAIL';
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    dispatch({ type: `SET_${name}`, data: value });
+  };
+  return (
+    <div className="flex items-center mb-8  border-indigo-100 border-2 border-solid py-1 px-4">
+      <div className="text-2xl text-indigo-300 mr-3">
+        {isEmail ? <AiOutlineMail /> : <AiFillLock />}
+      </div>
+      <input
+        name={name}
+        value={text}
+        placeholder={placeholder}
+        className="w-full outline-none text-indigo-400"
+        type="text"
+        onChange={handleChange}
+      />
+    </div>
+  );
+}
