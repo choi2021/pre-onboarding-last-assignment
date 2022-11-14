@@ -8,7 +8,7 @@ export default class AuthServiceImpl implements AuthService {
   async signUp({ email, password }: UserInfoType) {
     try {
       const response = await this.httpClient.post<AuthResponse>(
-        '/users/signup',
+        'api/users/signup',
         { email, password }
       );
       const { data } = response;
@@ -32,7 +32,7 @@ export default class AuthServiceImpl implements AuthService {
   async signIn(userInfo: UserInfoType) {
     try {
       const response = await this.httpClient.post<AuthResponse>(
-        '/login',
+        'api/login',
         userInfo
       );
       const { data } = response;

@@ -1,13 +1,13 @@
 const SIGN_IN_MESSAGE = {
   password: 'Incorrect password',
   email: 'Cannot find user',
-};
+} as const;
 
 const SIGN_UP_MESSAGE = {
   password: 'Password is too short',
   email: 'Email format is invalid',
   duplicate: 'Email already exists',
-};
+} as const;
 
 export default class HTTPError extends Error {
   constructor(

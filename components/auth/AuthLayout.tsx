@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
-import AuthFooter from './AuthFooter';
+import Footer from '../Footer';
+
 import AuthForm from './AuthForm';
-import AuthHeader from './AuthHeader';
+import Header from '../Header';
 
 const SIGN_IN_URL = '/signin';
 const SIGN_UP_URL = '/signup';
@@ -9,16 +10,17 @@ const SIGN_UP_URL = '/signup';
 export default function AuthLayout() {
   const { pathname } = useRouter();
   const isLogin = pathname === SIGN_IN_URL;
+  const isHome = pathname === '/';
   return (
     <div className="w-screen flex items-center justify-center h-screen bg-slate-200 ">
       <section className="flex flex-col items-center justify-center h-screen  w-2/3">
-        <AuthHeader />
+        <Header isHome={isHome}/>
         <AuthForm
           name={isLogin ? 'Login' : 'Register'}
           isLogin={isLogin}
           url={isLogin ? SIGN_UP_URL : SIGN_IN_URL}
         />
-        <AuthFooter />
+        <Footer />
       </section>
     </div>
   );
