@@ -4,7 +4,7 @@ import { AiOutlineQuestionCircle, AiOutlineBell } from 'react-icons/ai';
 
 export default function MainHeader() {
   return (
-    <header className="flex justify-between p-2 items-center">
+    <header className="flex justify-between p-2 items-center h-12">
       <div className="flex items-center">
         <BsListNested className="mr-3" />
         <h1 className="font-black">투자계좌</h1>

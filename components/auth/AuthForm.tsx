@@ -78,7 +78,7 @@ export default function AuthForm({ name, isLogin, url }: AuthFormProps) {
         .then((data) => {
           if ('accessToken' in data) {
             setMessage('성공했습니다');
-            router.push('/signin');
+            router.push('/login');
           }
         })
         .catch((error) => setMessage(error.signUpMessage));

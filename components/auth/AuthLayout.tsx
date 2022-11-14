@@ -4,8 +4,8 @@ import Footer from '../Footer';
 import AuthForm from './AuthForm';
 import Header from '../Header';
 
-const SIGN_IN_URL = '/signin';
-const SIGN_UP_URL = '/signup';
+const SIGN_IN_URL = '/login';
+const SIGN_UP_URL = '/register';
 
 export default function AuthLayout() {
   const { pathname } = useRouter();
@@ -14,7 +14,7 @@ export default function AuthLayout() {
   return (
     <div className="w-screen flex items-center justify-center h-screen bg-slate-200 ">
       <section className="flex flex-col items-center justify-center h-screen  w-2/3">
-        <Header isHome={isHome}/>
+        <Header isHome={isHome} />
         <AuthForm
           name={isLogin ? 'Login' : 'Register'}
           isLogin={isLogin}

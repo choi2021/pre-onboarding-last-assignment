@@ -34,7 +34,7 @@ export const AuthProvider = ({ children, authService }: AuthProviderProps) => {
     if (token) {
       router.push('/');
     } else {
-      router.push('/signin');
+      router.push('/login');
     }
   }, [token]);
   return (

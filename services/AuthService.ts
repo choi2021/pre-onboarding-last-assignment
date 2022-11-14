@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import HTTPError from '../network/httpError';
 import { AuthResponse, AuthService, UserInfoType } from '../types/AuthTypes';
 
