@@ -31,10 +31,10 @@ export const AuthProvider = ({ children, authService }: AuthProviderProps) => {
   }, []);
 
   useEffect(() => {
-    if (token) {
-      router.push('/');
-    } else {
+    if (!token) {
       router.push('/login');
+    } else {
+      router.push('/');
     }
   }, [token]);
   return (

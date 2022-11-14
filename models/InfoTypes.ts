@@ -63,4 +63,7 @@ export type UserTableType = {
   allow_marketing_push: boolean;
   is_active: boolean;
   created_at: string;
+  is_staff: boolean;
 };
+
+export type SelectType = 'all' | 'active' | 'staff';

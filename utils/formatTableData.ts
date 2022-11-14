@@ -38,10 +38,9 @@ function formatTableData(
       last_login,
       phone_number,
     } = item;
-    const { is_active, allow_marketing_push } = settingData[idx];
+    const { is_active, allow_marketing_push, is_staff } = settingData[idx];
     const maskedName = maskName(name);
     const account_count = accountCount[id];
-    const formattedBirthDate = formatDate(birth_date);
     const maskedPhoneNumber = maskPhoneNumber(phone_number);
     const formattedItem: UserTableType = {
       id,
@@ -49,12 +48,13 @@ function formatTableData(
       account_count,
       email,
       gender_origin,
-      birth_date: formattedBirthDate,
+      birth_date: formatDate(birth_date),
       phone_number: maskedPhoneNumber,
-      last_login,
+      last_login: formatDate(last_login),
       allow_marketing_push,
       is_active,
-      created_at,
+      created_at: formatDate(created_at),
+      is_staff,
     };
     tableData[idx] = formattedItem;
   });

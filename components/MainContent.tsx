@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import Table from './UserTable';
-import { useInfo } from '../hooks/useInfo';
+import { useRouter } from 'next/router';
 import { UserTableType } from '../models/InfoTypes';
-import { formatTableData } from '../utils/formatTableData';
+import UserTable from './Table';
+import { useUserTableData } from '../hooks/useUserTableData';
 
 const tableColumns = [
   '고객명',
@@ -18,33 +17,34 @@ const tableColumns = [
   '가입일',
 ];
 
+const FILTER = {
+  all: 'all',
+  staff: 'staff',
+  active: 'active',
+} as const;
+
 export default function MainContent() {
-  const infoService = useInfo();
-  const [tableData, setTableData] = useState<UserTableType[]>([]);
-  const { data: userData } = useQuery(['users'], () => {
-    return infoService?.getUsers(1);
-  });
-  const { data: settingData } = useQuery(['userSetting'], () => {
-    return infoService?.getUserSetting();
-  });
-  const { data: accountData } = useQuery(['accounts'], () => {
-    return infoService?.getAccounts(1);
-  });
-  console.log(tableData);
+  const router = useRouter();
+  const { query } = router;
+  const { filter } = query;
+  const tableData = useUserTableData();
+  const [filteredData, setFilteredData] = useState<UserTableType[]>(tableData);
+
   useEffect(() => {
-    if (userData && settingData && accountData) {
-      const formattedTableData = formatTableData(
-        userData,
-        settingData,
-        accountData
-      );
-      setTableData(formattedTableData);
-    }
-  }, [userData, settingData, accountData]);
+    setFilteredData((prev) => {
+      if (!filter || filter === FILTER.all) {
+        return tableData;
+      }
+      if (filter === FILTER.active) {
+        return tableData.filter((item) => item.is_active);
+      }
+      return tableData.filter((item) => item.is_staff);
+    });
+  }, [filter]);
 
   return (
     <section className="bg-slate-100 flex-1 ">
-      <Table />
+      <UserTable column={tableColumns} data={filteredData} />
     </section>
   );
 }
