@@ -4,7 +4,7 @@ import {
   InfoService,
   UserResponse,
   UserSettingResponse,
-} from '../types/InfoTypes';
+} from '../models/InfoTypes';
 import HTTPError from '../network/httpError';
 
 export default class InfoServiceImpl implements InfoService {
@@ -31,10 +31,10 @@ export default class InfoServiceImpl implements InfoService {
     throw new Error('Server Error');
   }
 
-  async getAccounts(page = 1, q?: string) {
+  async getAccounts(page: number, q?: string) {
     try {
       const { data } = await this.httpClient.get<AccountResponse>(
-        `api/accounts?_page=${page}&_limit=20${q ? `_q=${q}` : ''}`
+        `api/accounts`
       );
       return await data;
     } catch (error) {

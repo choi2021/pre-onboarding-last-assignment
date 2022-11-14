@@ -50,3 +50,17 @@ export interface InfoService {
   getAccounts: (page: number, q?: string) => AccountResponse;
   getUserSetting: () => UserSettingResponse;
 }
+
+export type UserTableType = {
+  id: number;
+  name: string;
+  account_count: number;
+  email: string;
+  gender_origin: number;
+  birth_date: string;
+  phone_number: string;
+  last_login: string;
+  allow_marketing_push: boolean;
+  is_active: boolean;
+  created_at: string;
+};

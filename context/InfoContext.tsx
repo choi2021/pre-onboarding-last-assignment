@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useMemo, useState } from 'react';
-import { InfoService } from '../types/InfoTypes';
+import { InfoService } from '../models/InfoTypes';
 
 interface InfoProviderProps {
   children: React.ReactNode;
