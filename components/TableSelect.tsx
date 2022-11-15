@@ -3,9 +3,14 @@ import React from 'react';
 
 export default function TableSelect() {
   const router = useRouter();
+  const { q } = router.query;
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.currentTarget;
-    router.push(`?filter=${value}`);
+    if (q) {
+      router.push(`?filter=${value}&q=${q}`);
+    } else {
+      router.push(`?filter=${value}`);
+    }
   };
   return (
     <select

@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 import Footer from './Footer';
 import MainHeader from './MainHeader';
+import { UserTableProvider } from '../context/UserTableContext';
 
 export default function MainLayout() {
   return (
@@ -10,7 +11,9 @@ export default function MainLayout() {
       <Sidebar />
       <main className="flex flex-col w-5/6 bg-white h-full">
         <MainHeader />
-        <MainContent />
+        <UserTableProvider>
+          <MainContent />
+        </UserTableProvider>
         <Footer />
       </main>
     </div>

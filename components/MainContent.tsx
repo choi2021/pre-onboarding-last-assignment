@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { UserTableType } from '../models/InfoTypes';
 import UserTable from './Table';
-import { useUserTableData } from '../hooks/useUserTableData';
+import { useFormatUserTable, useUserTableState } from '../hooks/useUserTable';
 
 const tableColumns = [
   '고객명',
@@ -26,10 +26,10 @@ const FILTER = {
 export default function MainContent() {
   const router = useRouter();
   const { query } = router;
-  const { filter } = query;
-  const tableData = useUserTableData();
+  const { filter, q } = query;
+  const tableData = useUserTableState();
   const [filteredData, setFilteredData] = useState<UserTableType[]>(tableData);
-
+  useFormatUserTable();
   useEffect(() => {
     setFilteredData((prev) => {
       if (!filter || filter === FILTER.all) {
@@ -40,7 +40,7 @@ export default function MainContent() {
       }
       return tableData.filter((item) => item.is_staff);
     });
-  }, [filter]);
+  }, [filter, tableData, q]);
 
   return (
     <section className="bg-slate-100 flex-1 ">
