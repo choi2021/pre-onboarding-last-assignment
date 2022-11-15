@@ -10,7 +10,7 @@ import HTTPError from '../network/httpError';
 export default class InfoServiceImpl implements InfoService {
   constructor(private httpClient: AxiosInstance) {}
 
-  async getUsers(page?: number) {
+  async getUsers(page?: string) {
     try {
       const { data } = await this.httpClient.get<UserResponse>(
         `api/users?_page=${page}&_limit=15`
@@ -31,7 +31,7 @@ export default class InfoServiceImpl implements InfoService {
     throw new Error('Server Error');
   }
 
-  async getUserSetting(page?: number) {
+  async getUserSetting(page?: string) {
     try {
       const { data } = await this.httpClient.get<UserSettingResponse>(
         `api/userSetting?_page=${page}&_limit=15`

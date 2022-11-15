@@ -3,20 +3,20 @@ import { useRouter } from 'next/router';
 import TableSelect from './TableSelect';
 
 interface TableHeaderProps {
+  isModalShowing: boolean;
   toggleModal: () => void;
 }
 
-export default function TableHeader({ toggleModal }: TableHeaderProps) {
+export default function TableHeader({
+  isModalShowing,
+  toggleModal,
+}: TableHeaderProps) {
   const [query, setQuery] = useState('');
   const router = useRouter();
-  const { filter } = router.query;
+  const { page, filter } = router.query;
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (filter) {
-      router.push(`/?filter=${filter}&q=${query}`);
-    } else {
-      router.push(`/?q=${query}`);
-    }
+    router.push(`/?page=${page}&filter=${filter || ''}&q=${query}`);
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -56,12 +56,12 @@ export default function TableHeader({ toggleModal }: TableHeaderProps) {
         />
       </form>
       <button
-        className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="block text-white bg-blue-700 hover:bg-blue-800  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 "
         type="button"
         data-modal-toggle="authentication-modal"
         onClick={handleClick}
       >
-        Toggle modal
+        {isModalShowing ? '돌아가기' : '사용자 추가하기'}
       </button>
     </header>
   );

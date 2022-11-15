@@ -17,7 +17,7 @@ function formatTableData(
   settingData: UserSettingType[],
   accountData: AccountType[]
 ) {
-  const { length } = userData;
+  const { length } = settingData;
   const tableData = Array(length);
   const accountCount: AccountCountType = {};
   accountData.forEach((item) => {
@@ -27,7 +27,8 @@ function formatTableData(
     }
     accountCount[id] += 1;
   });
-  userData.forEach((item, idx) => {
+
+  settingData.forEach((item, idx) => {
     const {
       id,
       name,
@@ -37,8 +38,8 @@ function formatTableData(
       created_at,
       last_login,
       phone_number,
-    } = item;
-    const { is_active, allow_marketing_push, is_staff } = settingData[idx];
+    } = userData[idx];
+    const { is_active, allow_marketing_push, is_staff } = item;
     const maskedName = maskName(name);
     const account_count = accountCount[id];
     const maskedPhoneNumber = maskPhoneNumber(phone_number);

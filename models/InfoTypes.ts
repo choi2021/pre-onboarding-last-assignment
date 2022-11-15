@@ -46,8 +46,8 @@ export type AccountResponse = Promise<AccountType[]>;
 export type UserSettingResponse = Promise<UserSettingType[]>;
 
 export interface InfoService {
-  getUsers: (page?: number) => UserResponse;
-  getUserSetting: (page?: number) => UserSettingResponse;
+  getUsers: (page?: string) => UserResponse;
+  getUserSetting: (page?: string) => UserSettingResponse;
   getAllAccounts: () => AccountResponse;
   getAllUserSetting: () => UserSettingResponse;
   getTargetUser: (q?: string) => UserResponse;

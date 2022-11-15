@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { useUserTableDispatch } from '../hooks/useUserTable';
-import { UserTableType } from '../models/InfoTypes';
 
 interface ModalProps {
   column: string[];

@@ -22,15 +22,16 @@ export function useUserTableDispatch() {
 
 export const useFormatUserTable = () => {
   const router = useRouter();
-  const { q } = router.query;
+  const { q, page } = router.query;
   const query = typeof q === 'string' ? q : q?.join('');
+  const currPage = typeof page === 'string' ? page : page?.join('');
   const dispatch = useUserTableDispatch();
   const infoService = useInfo();
-  const { data: userData } = useQuery(['users'], () => {
-    return infoService?.getUsers(1);
+  const { data: userData } = useQuery(['users', currPage], () => {
+    return infoService?.getUsers(currPage);
   });
-  const { data: settingData } = useQuery(['userSetting'], () => {
-    return infoService?.getUserSetting(1);
+  const { data: settingData } = useQuery(['userSetting', currPage], () => {
+    return infoService?.getUserSetting(currPage);
   });
   const { data: allAccountData } = useQuery(['accounts', 'all'], () => {
     return infoService?.getAllAccounts();
