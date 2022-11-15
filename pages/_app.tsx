@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AuthProvider } from '../context/AuthContext';
 import { InfoProvider } from '../context/InfoContext';
 import HttpClient from '../network/httpClient';
@@ -16,6 +17,7 @@ function App({ Component, pageProps }: AppProps) {
     <AuthProvider authService={authService}>
       <InfoProvider infoService={infoService}>
         <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
           <Component {...pageProps} />
         </QueryClientProvider>
       </InfoProvider>

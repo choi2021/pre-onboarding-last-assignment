@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
-import { useInfo } from '../hooks/useInfo';
 
 const USER_NUM = 15;
 const PAGENATION = 5;
@@ -10,18 +8,16 @@ const PAGENATION = 5;
 const PREV = 'prev';
 const NEXT = 'next';
 
-export default function Pagination() {
+interface PaginationProps {
+  totalItems: number;
+}
+
+export default function Pagination({ totalItems }: PaginationProps) {
   const router = useRouter();
   const { filter, q } = router.query;
   const [index, setIndex] = useState(0);
   const pages = [1, 2, 3, 4, 5].map((item) => index * PAGENATION + item);
-
-  const infoService = useInfo();
-  const { data } = useQuery(['usersetting', 'all'], () => {
-    return infoService?.getAllUserSetting();
-  });
-  const length = data?.length || 0;
-  const totalPage = Math.ceil(length / USER_NUM);
+  const totalPage = Math.ceil(totalItems / USER_NUM);
   const isFirstIndex = index === 0;
   const isLastIndex = index === Math.floor(totalPage / PAGENATION);
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {

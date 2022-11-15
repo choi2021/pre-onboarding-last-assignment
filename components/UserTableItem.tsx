@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { BsArrowUp, BsTrash } from 'react-icons/bs';
-import { UserTableType } from '../models/InfoTypes';
-import { useUserTableDispatch, useUserTableState } from '../hooks/useUserTable';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
+import { UserSettingType, UserTableType } from '../models/InfoTypes';
+import { useInfo } from '../hooks/useInfo';
 
 interface UserTableItemProps {
   item: UserTableType;
@@ -9,8 +11,46 @@ interface UserTableItemProps {
 
 export default function UserTableItem({ item }: UserTableItemProps) {
   const [isModifying, setIsModifying] = useState(false);
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const { page } = router.query;
+  const infoService = useInfo();
+  const userMutation = useMutation(
+    async (id: string) => {
+      return infoService?.deleteUser(id);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['users', page]);
+      },
+    }
+  );
+  const settingMutation = useMutation(
+    async (id: string) => {
+      return infoService?.deleteUserSetting(id);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['userSetting', 'all']);
+      },
+    }
+  );
+  const nameMutation = useMutation(
+    async (info: { name: string; id: string }) => {
+      return infoService?.patchUserName(info);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['users', page]);
+      },
+    }
+  );
+  const { data }: { data: UserSettingType[] | undefined } = useQuery([
+    'usersetting',
+    'all',
+  ]);
+  const userSetting = data?.find((setting) => setting.uuid === item.uuid);
   const [name, setName] = useState(item.name);
-  const dispatch = useUserTableDispatch();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     setName(value);
@@ -20,12 +60,13 @@ export default function UserTableItem({ item }: UserTableItemProps) {
   };
 
   const handleEdit = () => {
-    dispatch({ type: 'EDIT_NAME', edit: { ...item, name } });
+    nameMutation.mutate({ id: item.id.toString(), name });
     toggleIsModifying();
   };
 
   const handleDelete = () => {
-    dispatch({ type: 'DELETE', id: item.id });
+    userMutation.mutate(item.id.toString());
+    settingMutation.mutate(userSetting?.id.toString() || '');
   };
 
   return (

@@ -38,10 +38,11 @@ function formatTableData(
       created_at,
       last_login,
       phone_number,
+      uuid,
     } = userData[idx];
     const { is_active, allow_marketing_push, is_staff } = item;
     const maskedName = maskName(name);
-    const account_count = accountCount[id];
+    const account_count = accountCount[id] || 0;
     const maskedPhoneNumber = maskPhoneNumber(phone_number);
     const formattedItem: UserTableType = {
       id,
@@ -56,6 +57,7 @@ function formatTableData(
       is_active,
       created_at: formatDate(created_at),
       is_staff,
+      uuid,
     };
     tableData[idx] = formattedItem;
   });

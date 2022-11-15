@@ -8,9 +8,10 @@ import UserTableItem from './UserTableItem';
 interface TableProps {
   column: string[];
   data: UserTableType[];
+  totalItems: number;
 }
 
-export default function Table({ column, data }: TableProps) {
+export default function Table({ column, data, totalItems }: TableProps) {
   const [isModalShowing, setIsModalShowing] = useState(false);
   const toggleModal = () => {
     setIsModalShowing((prev) => !prev);
@@ -40,7 +41,7 @@ export default function Table({ column, data }: TableProps) {
               ))}
             </tbody>
           </table>
-          <Pagination />
+          <Pagination totalItems={totalItems} />
         </>
       )}
       {isModalShowing && <Modal column={column} />}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { UserTableType } from '../models/InfoTypes';
 import UserTable from './Table';
-import { useFormatUserTable, useUserTableState } from '../hooks/useUserTable';
+import { useFormatUserTable } from '../hooks/useUserTable';
 
 const tableColumns = [
   '고객명',
@@ -27,24 +27,28 @@ export default function MainContent() {
   const router = useRouter();
   const { query } = router;
   const { filter, q } = query;
-  const tableData = useUserTableState();
-  const [filteredData, setFilteredData] = useState<UserTableType[]>(tableData);
-  useFormatUserTable();
+  const { totalItems, userTableData } = useFormatUserTable();
+  const [filteredData, setFilteredData] =
+    useState<UserTableType[]>(userTableData);
   useEffect(() => {
     setFilteredData((prev) => {
       if (!filter || filter === FILTER.all) {
-        return tableData;
+        return userTableData;
       }
       if (filter === FILTER.active) {
-        return tableData.filter((item) => item.is_active);
+        return userTableData.filter((item) => item.is_active);
       }
-      return tableData.filter((item) => item.is_staff);
+      return userTableData.filter((item) => item.is_staff);
     });
-  }, [filter, tableData, q]);
+  }, [filter, userTableData, q]);
 
   return (
     <section className="bg-slate-100 flex-1 ">
-      <UserTable column={tableColumns} data={filteredData} />
+      <UserTable
+        column={tableColumns}
+        data={filteredData}
+        totalItems={totalItems}
+      />
     </section>
   );
 }

@@ -13,6 +13,7 @@ export type UserType = {
   last_login: string;
   created_at: string;
   updated_at: string;
+  password?: string;
 };
 
 export type AccountType = {
@@ -52,6 +53,11 @@ export interface InfoService {
   getAllUserSetting: () => UserSettingResponse;
   getTargetUser: (q?: string) => UserResponse;
   getTargetUserSetting: (q?: string) => UserSettingResponse;
+  deleteUser: (id: string) => Promise<unknown>;
+  deleteUserSetting: (id: string) => void;
+  patchUserName: ({ name, id }: { name: string; id: string }) => void;
+  postUser: (user: UserType) => void;
+  postSetting: (setting: UserSettingType) => void;
 }
 
 export type UserTableType = {
@@ -67,6 +73,7 @@ export type UserTableType = {
   is_active: boolean;
   created_at: string;
   is_staff: boolean;
+  uuid: string;
 };
 
 export type SelectType = 'all' | 'active' | 'staff';

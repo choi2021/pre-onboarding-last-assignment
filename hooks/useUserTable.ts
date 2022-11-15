@@ -3,29 +3,14 @@ import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useInfo } from './useInfo';
 import { formatTableData } from '../utils/formatTableData';
-import {
-  UserTableDispatchContext,
-  UserTableStateContext,
-} from '../context/UserTableContext';
-
-export function useUserTableState() {
-  const state = useContext(UserTableStateContext);
-  if (!state) throw new Error('Cannot find UserTablestateProvider'); // 유효하지 않을땐 에러를 발생
-  return state;
-}
-
-export function useUserTableDispatch() {
-  const dispatch = useContext(UserTableDispatchContext);
-  if (!dispatch) throw new Error('Cannot find UserTableDispatchProvider'); // 유효하지 않을땐 에러를 발생
-  return dispatch;
-}
+import { UserTableType, UserType } from '../models/InfoTypes';
 
 export const useFormatUserTable = () => {
+  const [userTableData, setUserTableData] = useState<UserTableType[]>([]);
   const router = useRouter();
   const { q, page } = router.query;
   const query = typeof q === 'string' ? q : q?.join('');
   const currPage = typeof page === 'string' ? page : page?.join('');
-  const dispatch = useUserTableDispatch();
   const infoService = useInfo();
   const { data: userData } = useQuery(['users', currPage], () => {
     return infoService?.getUsers(currPage);
@@ -52,7 +37,7 @@ export const useFormatUserTable = () => {
           settingData,
           allAccountData
         );
-        dispatch({ type: 'SET_DATA', data: formattedTableData });
+        setUserTableData(formattedTableData);
       }
     }
   }, [q, userData, settingData, allAccountData]);
@@ -75,8 +60,9 @@ export const useFormatUserTable = () => {
           targetUserSetting,
           allAccountData
         );
-        dispatch({ type: 'SET_DATA', data: formattedTableData });
+        setUserTableData(formattedTableData);
       }
     }
   }, [q, targetUser, allUserSetting, allAccountData]);
+  return { totalItems: allUserSetting?.length || 0, userTableData };
 };
