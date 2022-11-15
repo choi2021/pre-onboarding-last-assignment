@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import AuthInput from './AuthInput';
 import Banner from './Banner';
 import { ActionType, UserInfoType } from '../../types/AuthTypes';
-import { useToken, useAuthService } from '../../hooks/useAuth';
+import { useAuthService } from '../../hooks/useAuth';
 
 const ACTION_CONST = {
   SET_EMAIL: 'SET_EMAIL',
@@ -55,7 +55,6 @@ export default function AuthForm({ name, isLogin, url }: AuthFormProps) {
   const [userInfo, dispatch] = useReducer(authReducer, initialState);
   const authService = useAuthService();
   const router = useRouter();
-  const tokenStorage = useToken();
   const isActive = !userInfo.emailValid || !userInfo.passwordValid;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,9 +65,7 @@ export default function AuthForm({ name, isLogin, url }: AuthFormProps) {
         .then((data) => {
           if ('accessToken' in data) {
             localStorage.setItem('accessToken', data.accessToken);
-            if (tokenStorage) {
-              tokenStorage.setToken(data.accessToken);
-            }
+            router.push('/');
           }
         })
         .catch((error) => setMessage(error.signInMessage));

@@ -14,12 +14,13 @@ interface PaginationProps {
 
 export default function Pagination({ totalItems }: PaginationProps) {
   const router = useRouter();
-  const { filter, q } = router.query;
+  const { filter, q, page } = router.query;
   const [index, setIndex] = useState(0);
   const pages = [1, 2, 3, 4, 5].map((item) => index * PAGENATION + item);
   const totalPage = Math.ceil(totalItems / USER_NUM);
   const isFirstIndex = index === 0;
   const isLastIndex = index === Math.floor(totalPage / PAGENATION);
+  const currPage = page || '1';
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget;
     if (name === PREV) {
@@ -56,7 +57,9 @@ export default function Pagination({ totalItems }: PaginationProps) {
               <li key={item}>
                 <Link
                   href={`?page=${item}&filter=${filter || ''}&q=${q || ''}`}
-                  className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  className={`${
+                    item.toString() === currPage && 'bg-blue-200'
+                  } py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
                 >
                   {item}
                 </Link>
