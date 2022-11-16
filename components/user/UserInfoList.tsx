@@ -1,6 +1,6 @@
 import React from 'react';
-import { formatDate } from '../utils/formatDate';
-import UserInfoItem from './userInfoItem';
+import { formatDate } from '../../utils/formatDate';
+import UserInfoItem from './UserInfoItem';
 
 const userInfoArray = [
   { name: '고객명', key: 'name' },

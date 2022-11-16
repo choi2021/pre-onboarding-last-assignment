@@ -4,6 +4,7 @@ import {
   UserTableType,
   UserType,
 } from '../models/InfoTypes';
+import { formatBoolean } from './formatBoolean';
 import { formatDate } from './formatDate';
 import { maskName } from './maskName';
 import { maskPhoneNumber } from './maskNumber';
@@ -53,10 +54,10 @@ function formatUserTableData(
       birth_date: formatDate(birth_date),
       phone_number: maskedPhoneNumber,
       last_login: formatDate(last_login),
-      allow_marketing_push,
-      is_active,
+      allow_marketing_push: formatBoolean(allow_marketing_push),
+      is_active: formatBoolean(is_active),
       created_at: formatDate(created_at),
-      is_staff,
+      is_staff: formatBoolean(is_staff),
       uuid,
       kind: 'user',
     };

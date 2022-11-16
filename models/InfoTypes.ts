@@ -72,10 +72,10 @@ export type UserTableType = {
   birth_date: string;
   phone_number: string;
   last_login: string;
-  allow_marketing_push: boolean;
-  is_active: boolean;
+  allow_marketing_push: string;
+  is_active: string;
   created_at: string;
-  is_staff: boolean;
+  is_staff: string;
   uuid: string;
   kind: 'user';
 };
@@ -88,11 +88,12 @@ export type AccountTableType = {
   name: string;
   assets: string;
   payments: string;
-  is_active: boolean;
+  is_active: string;
   created_at: string;
   id: string;
   kind: 'account';
   userId: number;
+  profit: 'up' | 'down' | 'equal';
 };
 
 export type OptionType = {

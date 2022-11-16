@@ -1,9 +1,9 @@
 import React from 'react';
-import { AccountType } from '../models/InfoTypes';
-import { accountStatus, broker } from '../models/variables';
-import { formatDate } from '../utils/formatDate';
-import { maskAccountNumber } from '../utils/maskNumber';
-import UserInfoItem from './userInfoItem';
+import { AccountType } from '../../models/InfoTypes';
+import { accountStatus, broker } from '../../models/variables';
+import { formatDate } from '../../utils/formatDate';
+import { maskAccountNumber } from '../../utils/maskNumber';
+import UserInfoItem from '../user/UserInfoItem';
 
 const accountInfoArray = [
   { name: '브로커명', key: 'broker_name' },
@@ -29,7 +29,6 @@ type AccountInfoType = {
 export default function AccountItem({ account }: { account: AccountType }) {
   const { broker_id, number, status, assets, payments, is_active, created_at } =
     account;
-  console.log(account);
   const formattedAccount: AccountInfoType = {
     broker_name: broker[broker_id],
     number: maskAccountNumber(number),

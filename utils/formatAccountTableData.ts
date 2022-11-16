@@ -1,5 +1,7 @@
 import { AccountTableType, AccountType, UserType } from '../models/InfoTypes';
 import { accountStatus, broker } from '../models/variables';
+import { calculateProfit } from './calculateProfit';
+import { formatBoolean } from './formatBoolean';
 import { formatDate } from './formatDate';
 import { maskAccountNumber } from './maskNumber';
 
@@ -40,11 +42,12 @@ const formatAccountTableData = (
       name,
       assets: Math.floor(+assets).toLocaleString(),
       payments: Math.floor(+payments).toLocaleString(),
-      is_active,
+      is_active: formatBoolean(is_active),
       created_at: formatDate(created_at),
       id: id + broker_id,
       userId: findUserId(user_id, allUsers),
       kind: 'account',
+      profit: calculateProfit(assets, payments),
     };
     tableData[idx] = formattedItem;
   });

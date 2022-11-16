@@ -1,7 +1,7 @@
 import React from 'react';
 import MainLayout from '../components/MainLayout';
 import SEO from '../components/SEO';
-import UserInfo from '../components/UserInfo';
+import UserInfo from '../components/user/UserInfo';
 
 export default function UserDetail() {
   return (

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useInfo } from '../hooks/useInfo';
-import AccountList from './AccountList';
+import { useInfo } from '../../hooks/useInfo';
+import AccountList from '../account/AccountList';
 import UserInfoList from './UserInfoList';
 
 export default function UserInfo() {
