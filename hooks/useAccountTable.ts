@@ -9,6 +9,7 @@ export const useAccountTable = () => {
   const infoService = useInfo();
   const router = useRouter();
   const { q, page } = router.query;
+  const query = typeof q === 'string' ? q : q?.join('');
   const currPage = typeof page === 'string' ? page : page?.join('');
   const [accountTableData, setAccountTableData] = useState<AccountTableType[]>(
     []
@@ -22,14 +23,26 @@ export const useAccountTable = () => {
   const { data: accountData } = useQuery(['account', currPage], () => {
     return infoService?.getAccounts(currPage);
   });
+  const { data: targetAccount } = useQuery(['account', query], () => {
+    return infoService?.getTargetAccount(query);
+  });
+
   const totalItems = allAccountData?.length || 0;
 
   useEffect(() => {
-    if (allUsers && accountData) {
+    if (!q && allUsers && accountData) {
       const formattedTableData = formatAccountTableData(allUsers, accountData);
       setAccountTableData(formattedTableData);
     }
-  }, [allUsers, accountData]);
-
+  }, [q, allUsers, accountData]);
+  useEffect(() => {
+    if (q && allUsers && targetAccount) {
+      const formattedTableData = formatAccountTableData(
+        allUsers,
+        targetAccount
+      );
+      setAccountTableData(formattedTableData);
+    }
+  }, [q, allUsers, targetAccount]);
   return { accountTableData, totalItems };
 };

@@ -19,7 +19,7 @@ export default function TableSelectItem({
       onChange={onChange}
       name={name}
       value={query[name]}
-      className="w-full text-xs border-1 border-solid border-slate-300 outline-none select select-error rounded-md border  text-center"
+      className="w-30 text-xs py-1 px-3 mx-2 border-1 border-solid border-slate-300 outline-none select select-error rounded-md border  text-center"
     >
       {item.map((option) => (
         <option key={option.value} value={option.value}>

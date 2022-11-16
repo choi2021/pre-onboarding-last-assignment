@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BsArrowUp, BsTrash } from 'react-icons/bs';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { UserSettingType, UserTableType } from '../../models/InfoTypes';
 import { useInfo } from '../../hooks/useInfo';
 
@@ -22,6 +23,7 @@ export default function UserTableItem({ item }: UserTableItemProps) {
     is_active,
     created_at,
     uuid,
+    id,
   } = item;
   const [isModifying, setIsModifying] = useState(false);
   const queryClient = useQueryClient();
@@ -29,8 +31,8 @@ export default function UserTableItem({ item }: UserTableItemProps) {
   const { page } = router.query;
   const infoService = useInfo();
   const userMutation = useMutation(
-    async (id: string) => {
-      return infoService?.deleteUser(id);
+    async (userId: string) => {
+      return infoService?.deleteUser(userId);
     },
     {
       onSuccess: () => {
@@ -39,8 +41,8 @@ export default function UserTableItem({ item }: UserTableItemProps) {
     }
   );
   const settingMutation = useMutation(
-    async (id: string) => {
-      return infoService?.deleteUserSetting(id);
+    async (userId: string) => {
+      return infoService?.deleteUserSetting(userId);
     },
     {
       onSuccess: () => {
@@ -104,7 +106,7 @@ export default function UserTableItem({ item }: UserTableItemProps) {
             </button>
           </div>
         ) : (
-          <span>{name}</span>
+          <Link href={`/${id}`}>{name}</Link>
         )}
       </td>
       <td className="py-1 text-center px-2">{account_count}</td>

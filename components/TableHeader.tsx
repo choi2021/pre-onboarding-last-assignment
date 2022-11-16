@@ -93,10 +93,14 @@ export default function TableHeader({
   const router = useRouter();
   const { route } = router;
   const isUser = route === '/';
-  const { page } = router.query;
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/?page=${page}`);
+    router.push({
+      pathname: router.route,
+      query: {
+        q: query,
+      },
+    });
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;

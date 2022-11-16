@@ -16,7 +16,9 @@ import MenuItem from './MenuItem';
 
 export default function Sidebar() {
   const router = useRouter();
-  const isHome = router.route === '/';
+  const { route } = router;
+  const isUser = route === '/';
+  const isAccount = route === '/account';
   const infoService = useInfo();
   const { data: allAccountData } = useQuery(['accounts', 'all'], () => {
     return infoService?.getAllAccounts();
@@ -36,13 +38,16 @@ export default function Sidebar() {
   };
   return (
     <aside className="w-1/6 bg-slate-800 flex flex-col items-center ">
-      <Header isHome={isHome} />
-      <div className="h-2/3 w-full ">
+      <Header />
+      <div className="h-2/3 w-full flex flex-col">
         <MenuItem text="대시보드">
           <AiOutlineDashboard className="mr-2" />
         </MenuItem>
-        <ul className="h-10 flex justify-between items-center text-indigo-400 cursor-pointer">
-          <Link href="/account">
+        <ul className="w-full h-10 flex justify-between items-center text-indigo-400 cursor-pointer">
+          <Link
+            href="/account"
+            className={`w-full ${isAccount && 'bg-blue-900 text-white'} `}
+          >
             <MenuItem text="계좌목록">
               <AiOutlineBank className="mr-2" />
             </MenuItem>
@@ -55,7 +60,7 @@ export default function Sidebar() {
             </Link>
           ))}
         </ul>
-        <Link href="/">
+        <Link href="/" className={`${isUser && 'bg-blue-900 text-slate-300'}`}>
           <MenuItem text="사용자">
             <AiOutlineUser className="mr-2" />
           </MenuItem>

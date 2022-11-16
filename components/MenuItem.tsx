@@ -7,7 +7,7 @@ interface MenuItemProps {
 
 export default function MenuItem({ text, children }: MenuItemProps) {
   return (
-    <div className="flex items-center text-indigo-400 h-10 w-full px-4">
+    <div className="flex justify-center items-center text-indigo-400 h-10 w-full px-4">
       {children}
       <span>{text}</span>
     </div>

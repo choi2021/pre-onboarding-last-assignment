@@ -1,5 +1,3 @@
-import { StringLiteral } from 'typescript';
-
 export type UserType = {
   id: number;
   uuid: string;
