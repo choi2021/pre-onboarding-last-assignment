@@ -7,12 +7,51 @@ interface TableHeaderProps {
   toggleModal: () => void;
 }
 
+const UserSelect = [
+  {
+    name: 'All',
+    value: 'all',
+  },
+  {
+    name: '활성화',
+    value: 'active',
+  },
+  {
+    name: '비활성화',
+    value: 'inactive',
+  },
+  {
+    name: '임직원',
+    value: 'staff',
+  },
+  {
+    name: '고객',
+    value: 'client',
+  },
+];
+const AccountSelect = [
+  {
+    name: '브로커 명',
+    value: 'broker',
+  },
+  {
+    name: 'Active',
+    value: 'active',
+  },
+  {
+    name: '',
+    value: 'staff',
+  },
+];
+
 export default function TableHeader({
   isModalShowing,
   toggleModal,
 }: TableHeaderProps) {
   const [query, setQuery] = useState('');
   const router = useRouter();
+  const { route } = router;
+  const isUser = route === '/';
   const { page, filter } = router.query;
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,10 +65,10 @@ export default function TableHeader({
   const handleClick = () => {
     toggleModal();
   };
-
+  const select = isUser ? UserSelect : AccountSelect;
   return (
     <header className="flex justify-between items-center p-2">
-      <TableSelect />
+      <TableSelect select={select} />
       <form className="relative" onSubmit={handleSubmit}>
         <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
           <svg
@@ -55,14 +94,16 @@ export default function TableHeader({
           onChange={handleChange}
         />
       </form>
-      <button
-        className="block text-white bg-blue-700 hover:bg-blue-800  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 "
-        type="button"
-        data-modal-toggle="authentication-modal"
-        onClick={handleClick}
-      >
-        {isModalShowing ? '돌아가기' : '사용자 추가하기'}
-      </button>
+      {isUser && (
+        <button
+          className="block text-white bg-blue-700 hover:bg-blue-800  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 "
+          type="button"
+          data-modal-toggle="authentication-modal"
+          onClick={handleClick}
+        >
+          {isModalShowing ? '돌아가기' : '사용자 추가하기'}
+        </button>
+      )}
     </header>
   );
 }

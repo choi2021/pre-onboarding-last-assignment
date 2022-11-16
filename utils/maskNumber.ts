@@ -19,4 +19,11 @@ function maskPhoneNumber(phoneNumber: string) {
   return maskedPhoneNumber;
 }
 
-export { maskPhoneNumber };
+function maskAccountNumber(accountNumber: string) {
+  let result = accountNumber.replace(/\S/gi, '*');
+  result = result.substring(1, result.length - 1);
+  result = accountNumber[0] + result + accountNumber[accountNumber.length - 1];
+  return result;
+}
+
+export { maskPhoneNumber, maskAccountNumber };

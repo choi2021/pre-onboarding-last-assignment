@@ -54,6 +54,46 @@ export default class InfoServiceImpl implements InfoService {
     throw new Error('Server Error');
   }
 
+  async getAccounts(page?: string) {
+    try {
+      const { data } = await this.httpClient.get<AccountResponse>(
+        `api/accounts?_page=${page}&_limit=15`
+      );
+      return await data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const { response } = error;
+        if (response) {
+          throw new HTTPError(
+            response?.status,
+            response?.statusText,
+            response.data
+          );
+        }
+      }
+    }
+    throw new Error('Server Error');
+  }
+
+  async getAllUsers() {
+    try {
+      const { data } = await this.httpClient.get<UserResponse>(`api/users`);
+      return await data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const { response } = error;
+        if (response) {
+          throw new HTTPError(
+            response?.status,
+            response?.statusText,
+            response.data
+          );
+        }
+      }
+    }
+    throw new Error('Server Error');
+  }
+
   async getAllAccounts() {
     try {
       const { data } = await this.httpClient.get<AccountResponse>(
@@ -100,6 +140,27 @@ export default class InfoServiceImpl implements InfoService {
     try {
       const { data } = await this.httpClient.get<UserResponse>(
         `api/users?q=${q}`
+      );
+      return await data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const { response } = error;
+        if (response) {
+          throw new HTTPError(
+            response?.status,
+            response?.statusText,
+            response.data
+          );
+        }
+      }
+    }
+    throw new Error('Server Error');
+  }
+
+  async getTargetAccount(q?: string) {
+    try {
+      const { data } = await this.httpClient.get<AccountResponse>(
+        `api/accounts?q=${q}`
       );
       return await data;
     } catch (error) {

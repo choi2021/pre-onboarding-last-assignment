@@ -1,3 +1,5 @@
+import { StringLiteral } from 'typescript';
+
 export type UserType = {
   id: number;
   uuid: string;
@@ -49,10 +51,13 @@ export type UserSettingResponse = Promise<UserSettingType[]>;
 export interface InfoService {
   getUsers: (page?: string) => UserResponse;
   getUserSetting: (page?: string) => UserSettingResponse;
+  getAccounts: (page?: string) => AccountResponse;
+  getAllUsers: () => UserResponse;
   getAllAccounts: () => AccountResponse;
   getAllUserSetting: () => UserSettingResponse;
   getTargetUser: (q?: string) => UserResponse;
   getTargetUserSetting: (q?: string) => UserSettingResponse;
+  getTargetAccount: (q?: string) => AccountResponse;
   deleteUser: (id: string) => Promise<unknown>;
   deleteUserSetting: (id: string) => void;
   patchUserName: ({ name, id }: { name: string; id: string }) => void;
@@ -77,3 +82,16 @@ export type UserTableType = {
 };
 
 export type SelectType = 'all' | 'active' | 'staff';
+
+export type AccountTableType = {
+  user_name: string;
+  broker_name: string;
+  number: string;
+  status: string;
+  name: string;
+  assets: string;
+  payments: string;
+  is_active: boolean;
+  created_at: string;
+  id: string;
+};

@@ -31,7 +31,7 @@ export default function Pagination({ totalItems }: PaginationProps) {
   };
 
   return (
-    <nav className="flex justify-center py-2">
+    <nav className="flex justify-center py-5">
       <ul className="inline-flex items-center -space-x-px">
         {!isFirstIndex && (
           <button name={PREV} type="button" onClick={handleClick}>

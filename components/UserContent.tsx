@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { UserTableType } from '../models/InfoTypes';
-import UserTable from './Table';
+import Table from './Table';
 import { useFormatUserTable } from '../hooks/useUserTable';
 
 const tableColumns = [
@@ -18,33 +18,40 @@ const tableColumns = [
 ];
 
 const FILTER = {
-  all: 'all',
   staff: 'staff',
+  client: 'client',
   active: 'active',
+  inactive: 'inactive',
 } as const;
 
-export default function MainContent() {
+export default function UserContent() {
   const router = useRouter();
   const { query } = router;
-  const { filter, q } = query;
   const { totalItems, userTableData } = useFormatUserTable();
   const [filteredData, setFilteredData] =
     useState<UserTableType[]>(userTableData);
   useEffect(() => {
+    const { active, staff } = query;
     setFilteredData((prev) => {
-      if (!filter || filter === FILTER.all) {
-        return userTableData;
-      }
-      if (filter === FILTER.active) {
+      if (active === FILTER.active) {
         return userTableData.filter((item) => item.is_active);
       }
-      return userTableData.filter((item) => item.is_staff);
+      if (active === FILTER.inactive) {
+        return userTableData.filter((item) => !item.is_active);
+      }
+      if (staff === FILTER.staff) {
+        return userTableData.filter((item) => item.is_staff);
+      }
+      if (staff === FILTER.client) {
+        return userTableData.filter((item) => !item.is_staff);
+      }
+      return userTableData;
     });
-  }, [filter, userTableData, q]);
+  }, [userTableData]);
 
   return (
     <section className="bg-slate-100 flex-1 ">
-      <UserTable
+      <Table
         column={tableColumns}
         data={filteredData}
         totalItems={totalItems}

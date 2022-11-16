@@ -12,7 +12,7 @@ type AccountCountType = {
   [index: string]: number;
 };
 
-function formatTableData(
+function formatUserTableData(
   userData: UserType[],
   settingData: UserSettingType[],
   accountData: AccountType[]
@@ -58,10 +58,11 @@ function formatTableData(
       created_at: formatDate(created_at),
       is_staff,
       uuid,
+      kind: 'user',
     };
     tableData[idx] = formattedItem;
   });
   return tableData;
 }
 
-export { formatTableData };
+export { formatUserTableData };

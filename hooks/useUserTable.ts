@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useInfo } from './useInfo';
-import { formatTableData } from '../utils/formatTableData';
+import { formatUserTableData } from '../utils/formatUserTableData';
 import { UserTableType, UserType } from '../models/InfoTypes';
 
 export const useFormatUserTable = () => {
@@ -32,7 +32,7 @@ export const useFormatUserTable = () => {
   useEffect(() => {
     if (!q) {
       if (userData && settingData && allAccountData) {
-        const formattedTableData = formatTableData(
+        const formattedTableData = formatUserTableData(
           userData,
           settingData,
           allAccountData
@@ -55,7 +55,7 @@ export const useFormatUserTable = () => {
           }
           return target;
         });
-        const formattedTableData = formatTableData(
+        const formattedTableData = formatUserTableData(
           targetUser,
           targetUserSetting,
           allAccountData

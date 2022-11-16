@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { UserTableType } from '../models/InfoTypes';
+import {
+  AccountTableType,
+  AccountType,
+  UserTableType,
+} from '../models/InfoTypes';
+import AccountTableItem from './AccountTableItem';
 import Modal from './Modal';
 import Pagination from './Pagination';
 import TableHeader from './TableHeader';
@@ -7,7 +12,7 @@ import UserTableItem from './UserTableItem';
 
 interface TableProps {
   column: string[];
-  data: UserTableType[];
+  data: UserTableType[] | AccountTableType[];
   totalItems: number;
 }
 
@@ -36,9 +41,12 @@ export default function Table({ column, data, totalItems }: TableProps) {
               </tr>
             </thead>
             <tbody>
-              {data.map((item) => (
-                <UserTableItem key={item.id} item={item} />
-              ))}
+              {data.map((item) => {
+                if (item.kind === 'user') {
+                  return <UserTableItem key={item.id} item={item} />;
+                }
+                return <AccountTableItem key={item.id} item={item} />;
+              })}
             </tbody>
           </table>
           <Pagination totalItems={totalItems} />

@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { BsArrowUp, BsTrash } from 'react-icons/bs';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { UserSettingType, UserTableType } from '../models/InfoTypes';
+import {
+  AccountTableType,
+  UserSettingType,
+  UserTableType,
+} from '../models/InfoTypes';
 import { useInfo } from '../hooks/useInfo';
 
 interface UserTableItemProps {
@@ -10,6 +14,19 @@ interface UserTableItemProps {
 }
 
 export default function UserTableItem({ item }: UserTableItemProps) {
+  const {
+    name,
+    account_count,
+    email,
+    gender_origin,
+    birth_date,
+    phone_number,
+    last_login,
+    allow_marketing_push,
+    is_active,
+    created_at,
+    uuid,
+  } = item;
   const [isModifying, setIsModifying] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -49,11 +66,11 @@ export default function UserTableItem({ item }: UserTableItemProps) {
     'usersetting',
     'all',
   ]);
-  const userSetting = data?.find((setting) => setting.uuid === item.uuid);
-  const [name, setName] = useState(item.name);
+  const userSetting = data?.find((setting) => setting.uuid === uuid);
+  const [userName, setUserName] = useState(name);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    setName(value);
+    setUserName(value);
   };
   const toggleIsModifying = () => {
     setIsModifying((prev) => !prev);
@@ -77,7 +94,7 @@ export default function UserTableItem({ item }: UserTableItemProps) {
             <input
               type="text"
               className="border w-24 mr-1 text-center"
-              value={name}
+              value={userName}
               onChange={handleChange}
             />
             <button
@@ -89,20 +106,20 @@ export default function UserTableItem({ item }: UserTableItemProps) {
             </button>
           </div>
         ) : (
-          <span>{item.name}</span>
+          <span>{name}</span>
         )}
       </td>
-      <td className="py-1 text-center px-2">{item.account_count}</td>
-      <td className="py-1 text-center px-2">{item.email}</td>
-      <td className="py-1 text-center px-2">{item.gender_origin}</td>
-      <td className="py-1 text-center px-2">{item.birth_date}</td>
-      <td className="py-1 text-center px-2">{item.phone_number}</td>
-      <td className="py-1 text-center px-2">{item.last_login}</td>
+      <td className="py-1 text-center px-2">{account_count}</td>
+      <td className="py-1 text-center px-2">{email}</td>
+      <td className="py-1 text-center px-2">{gender_origin}</td>
+      <td className="py-1 text-center px-2">{birth_date}</td>
+      <td className="py-1 text-center px-2">{phone_number}</td>
+      <td className="py-1 text-center px-2">{last_login}</td>
       <td className="py-1 text-center px-2">
-        {item.allow_marketing_push.toString()}
+        {allow_marketing_push.toString()}
       </td>
-      <td className="py-1 text-center px-2">{item.is_active.toString()}</td>
-      <td className="py-1 text-center px-2">{item.created_at}</td>
+      <td className="py-1 text-center px-2">{is_active.toString()}</td>
+      <td className="py-1 text-center px-2">{created_at}</td>
       <td className="py-1 text-center px-2 cursor-pointer">
         <button type="button" onClick={toggleIsModifying}>
           Edit
