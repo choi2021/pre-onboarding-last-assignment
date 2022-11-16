@@ -10,11 +10,10 @@ const SIGN_UP_URL = '/register';
 export default function AuthLayout() {
   const { pathname } = useRouter();
   const isLogin = pathname === SIGN_IN_URL;
-  const isHome = pathname === '/';
   return (
     <div className="w-screen flex items-center justify-center h-screen bg-slate-200 ">
       <section className="flex flex-col items-center justify-center h-screen  w-2/3">
-        <Header isHome={isHome} />
+        <Header />
         <AuthForm
           name={isLogin ? 'Login' : 'Register'}
           isLogin={isLogin}

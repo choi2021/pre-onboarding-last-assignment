@@ -92,6 +92,7 @@ export type AccountTableType = {
   created_at: string;
   id: string;
   kind: 'account';
+  userId: number;
 };
 
 export type OptionType = {

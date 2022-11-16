@@ -29,7 +29,7 @@ type AccountInfoType = {
 export default function AccountItem({ account }: { account: AccountType }) {
   const { broker_id, number, status, assets, payments, is_active, created_at } =
     account;
-  console.log(broker[broker_id]);
+  console.log(account);
   const formattedAccount: AccountInfoType = {
     broker_name: broker[broker_id],
     number: maskAccountNumber(number),
@@ -40,7 +40,7 @@ export default function AccountItem({ account }: { account: AccountType }) {
     created_at: formatDate(created_at),
   };
   return (
-    <section className="py-3">
+    <section className="px-2 py-3 border-t-2 border-t-slate-300">
       <h1 className="mb-3">{account.name}</h1>
       <ul className="grid grid-cols-3 gap-2 ">
         {accountInfoArray.map((item) => (

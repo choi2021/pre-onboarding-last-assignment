@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { AccountTableType } from '../../models/InfoTypes';
 
@@ -19,9 +20,13 @@ export default function AccountTableItem({ item }: AccountTableItemProps) {
   } = item;
   return (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-      <td className="py-1 text-center px-2">{user_name}</td>
+      <Link href={`/${item.userId}`}>
+        <td className="py-1 text-center px-2">{user_name}</td>
+      </Link>
       <td className="py-1 text-center px-2">{broker_name}</td>
-      <td className="py-1 text-center px-2">{number}</td>
+      <Link href={`/account/${item.id}`}>
+        <td className="py-1 text-center px-2">{number}</td>
+      </Link>
       <td className="py-1 text-center px-2">{status}</td>
       <td className="py-1 text-center px-2">{name}</td>
       <td className="py-1 text-center px-2">{assets}</td>

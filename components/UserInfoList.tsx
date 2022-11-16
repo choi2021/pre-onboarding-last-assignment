@@ -55,7 +55,7 @@ export default function UserInfoList({ user }: { user: UserInfoType }) {
   };
 
   return (
-    <ul className="grid grid-cols-3 gap-2 ">
+    <ul className="grid grid-cols-3 gap-2 px-3">
       {userInfoArray.map((item) => (
         <UserInfoItem
           key={item.name}

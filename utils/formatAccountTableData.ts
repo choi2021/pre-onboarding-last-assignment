@@ -8,6 +8,11 @@ const findUserName = (id: number, allUsers: UserType[]) => {
   return user?.name || '';
 };
 
+const findUserId = (id: number, allUsers: UserType[]) => {
+  const user = allUsers.find((item) => item.id === id);
+  return user?.id || 0;
+};
+
 const formatAccountTableData = (
   allUsers: UserType[],
   accountData: AccountType[]
@@ -38,6 +43,7 @@ const formatAccountTableData = (
       is_active,
       created_at: formatDate(created_at),
       id: id + broker_id,
+      userId: findUserId(user_id, allUsers),
       kind: 'account',
     };
     tableData[idx] = formattedItem;

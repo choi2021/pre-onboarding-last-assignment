@@ -1,5 +1,15 @@
 import React from 'react';
+import AccountInfo from '../../components/AccountInfo';
+import MainLayout from '../../components/MainLayout';
+import SEO from '../../components/SEO';
 
 export default function DetailAccount() {
-  return <div>DetailAccount</div>;
+  return (
+    <>
+      <SEO text="계좌 상세페이지 " />
+      <MainLayout>
+        <AccountInfo />
+      </MainLayout>
+    </>
+  );
 }

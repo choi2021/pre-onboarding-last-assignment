@@ -37,7 +37,7 @@ export default function Sidebar() {
     localStorage.removeItem('accessToken');
   };
   return (
-    <aside className="w-1/6 bg-slate-800 flex flex-col items-center ">
+    <aside className="w-1/6 bg-slate-800 flex flex-col  ">
       <Header />
       <div className="h-2/3 w-full flex flex-col">
         <MenuItem text="대시보드">

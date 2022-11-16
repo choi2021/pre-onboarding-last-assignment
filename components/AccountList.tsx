@@ -4,7 +4,7 @@ import AccountItem from './AccountItem';
 
 export default function AccountList({ accounts }: { accounts: AccountType[] }) {
   return (
-    <div>
+    <div className="bg-zinc-50  px-3">
       {accounts.map((item) => (
         <AccountItem key={item.id} account={item} />
       ))}
