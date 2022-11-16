@@ -79,9 +79,8 @@ export type UserTableType = {
   created_at: string;
   is_staff: boolean;
   uuid: string;
+  kind: 'user';
 };
-
-export type SelectType = 'all' | 'active' | 'staff';
 
 export type AccountTableType = {
   user_name: string;
@@ -94,4 +93,13 @@ export type AccountTableType = {
   is_active: boolean;
   created_at: string;
   id: string;
+  kind: 'account';
 };
+
+export type OptionType = {
+  name: string;
+  value: string;
+  text: string;
+};
+
+export type SelectType = OptionType[];

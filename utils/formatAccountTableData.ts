@@ -63,7 +63,7 @@ const brokerFormat: JSONType = {
 } as const;
 
 const accountStatus: JSONType = {
-  '9999': ' 관리자확인필요',
+  '9999': '관리자확인필요',
   '1': '입금대기',
   '2': '운용중',
   '3': '투자중지',

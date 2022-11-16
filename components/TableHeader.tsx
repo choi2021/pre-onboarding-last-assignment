@@ -1,48 +1,89 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import TableSelect from './TableSelect';
+import { SelectType } from '../models/InfoTypes';
 
 interface TableHeaderProps {
   isModalShowing: boolean;
   toggleModal: () => void;
 }
 
-const UserSelect = [
+const activeSelect: SelectType = [
   {
-    name: 'All',
+    name: 'active',
+    value: 'all',
+    text: 'All',
+  },
+  {
+    name: 'active',
+    text: '활성화',
+    value: 'active',
+  },
+  {
+    name: 'active',
+    text: '비활성화',
+    value: 'inactive',
+  },
+];
+const staffSelect: SelectType = [
+  {
+    name: 'staff',
+    text: 'All',
     value: 'all',
   },
   {
-    name: '활성화',
-    value: 'active',
-  },
-  {
-    name: '비활성화',
-    value: 'inactive',
-  },
-  {
-    name: '임직원',
+    name: 'staff',
+    text: '임직원',
     value: 'staff',
   },
   {
-    name: '고객',
+    name: 'staff',
+    text: '고객',
     value: 'client',
   },
 ];
-const AccountSelect = [
-  {
-    name: '브로커 명',
-    value: 'broker',
-  },
-  {
-    name: 'Active',
-    value: 'active',
-  },
-  {
-    name: '',
-    value: 'staff',
-  },
+
+const brokerSelect: SelectType = [
+  { name: 'broker', text: 'All', value: 'all' },
+  { name: 'broker', text: '유안타증권', value: '유안타증권' },
+  { name: 'broker', text: '현대증권', value: '현대증권' },
+  { name: 'broker', text: '미래에셋증권', value: '미래에셋증권' },
+  { name: 'broker', text: '대우증권', value: '대우증권' },
+  { name: 'broker', text: '삼성증권', value: '삼성증권' },
+  { name: 'broker', text: '한국투자증권', value: '한국투자증권' },
+  { name: 'broker', text: '우리투자증권', value: '우리투자증권' },
+  { name: 'broker', text: '교보증권', value: '교보증권' },
+  { name: 'broker', text: '하이투자증권', value: '하이투자증권' },
+  { name: 'broker', text: 'HMC투자증권', value: 'HMC투자증권' },
+  { name: 'broker', text: '키움증권', value: '키움증권' },
+  { name: 'broker', text: '이베스트투자증권', value: '이베스트투자증권' },
+  { name: 'broker', text: 'SK증권', value: 'SK증권' },
+  { name: 'broker', text: '대신증권', value: '대신증권' },
+  { name: 'broker', text: '아이엠투자증권', value: '아이엠투자증권' },
+  { name: 'broker', text: '한화투자증권', value: '한화투자증권' },
+  { name: 'broker', text: '하나대투자증권', value: '하나대투자증권' },
+  { name: 'broker', text: '동부증권', value: '동부증권' },
+  { name: 'broker', text: '유진투자증권', value: '유진투자증권' },
+  { name: 'broker', text: '카카오페이증권', value: '카카오페이증권' },
+  { name: 'broker', text: '메리츠종합금융증권', value: '메리츠종합금융증권' },
+  { name: 'broker', text: '부국증권', value: '부국증권' },
+  { name: 'broker', text: '신영증권', value: '신영증권' },
+  { name: 'broker', text: 'LIG투자증권', value: 'LIG투자증권' },
+  { name: 'broker', text: '토스증권', value: '토스증권' },
 ];
+
+const statusSelect: SelectType = [
+  { name: 'status', value: 'all', text: 'All' },
+  { name: 'status', value: '관리자확인필요', text: '관리자확인필요' },
+  { name: 'status', value: '입금대기', text: '입금대기' },
+  { name: 'status', value: '운용중', text: '운용중' },
+  { name: 'status', value: '투자중지', text: '투자중지' },
+  { name: 'status', value: '해지', text: '해지' },
+];
+
+const userSelect = [activeSelect, staffSelect];
+
+const accountSelect = [brokerSelect, activeSelect, statusSelect];
 
 export default function TableHeader({
   isModalShowing,
@@ -52,10 +93,10 @@ export default function TableHeader({
   const router = useRouter();
   const { route } = router;
   const isUser = route === '/';
-  const { page, filter } = router.query;
+  const { page } = router.query;
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/?page=${page}&filter=${filter || ''}&q=${query}`);
+    router.push(`/?page=${page}`);
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -65,7 +106,7 @@ export default function TableHeader({
   const handleClick = () => {
     toggleModal();
   };
-  const select = isUser ? UserSelect : AccountSelect;
+  const select = isUser ? userSelect : accountSelect;
   return (
     <header className="flex justify-between items-center p-2">
       <TableSelect select={select} />

@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-  AccountTableType,
-  AccountType,
-  UserTableType,
-} from '../models/InfoTypes';
+import { AccountTableType, UserTableType } from '../models/InfoTypes';
 import AccountTableItem from './AccountTableItem';
 import Modal from './Modal';
 import Pagination from './Pagination';

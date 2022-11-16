@@ -30,24 +30,25 @@ export default function UserContent() {
   const { totalItems, userTableData } = useFormatUserTable();
   const [filteredData, setFilteredData] =
     useState<UserTableType[]>(userTableData);
+  const { active, staff } = query;
   useEffect(() => {
-    const { active, staff } = query;
     setFilteredData((prev) => {
+      let result = [...userTableData];
       if (active === FILTER.active) {
-        return userTableData.filter((item) => item.is_active);
+        result = result.filter((item) => item.is_active);
       }
       if (active === FILTER.inactive) {
-        return userTableData.filter((item) => !item.is_active);
+        result = result.filter((item) => !item.is_active);
       }
       if (staff === FILTER.staff) {
-        return userTableData.filter((item) => item.is_staff);
+        result = result.filter((item) => item.is_staff);
       }
       if (staff === FILTER.client) {
-        return userTableData.filter((item) => !item.is_staff);
+        result = result.filter((item) => !item.is_staff);
       }
-      return userTableData;
+      return result;
     });
-  }, [userTableData]);
+  }, [active, staff, userTableData]);
 
   return (
     <section className="bg-slate-100 flex-1 ">

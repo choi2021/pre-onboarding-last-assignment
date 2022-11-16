@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useInfo } from './useInfo';
 import { formatUserTableData } from '../utils/formatUserTableData';
-import { UserTableType, UserType } from '../models/InfoTypes';
+import { UserTableType } from '../models/InfoTypes';
 
 export const useFormatUserTable = () => {
   const [userTableData, setUserTableData] = useState<UserTableType[]>([]);

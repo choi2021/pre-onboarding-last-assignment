@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useQuery } from '@tanstack/react-query';
 import Table from './Table';
-import { useInfo } from '../hooks/useInfo';
-import { AccountTableType, AccountType } from '../models/InfoTypes';
-import { formatAccountTableData } from '../utils/formatAccountTableData';
+import { AccountTableType } from '../models/InfoTypes';
+import { useAccountTable } from '../hooks/useAccountTable';
 
 const tableColumns = [
   '고객명',
@@ -19,38 +17,35 @@ const tableColumns = [
 ];
 
 export default function AccountContent() {
-  const [accountTableData, setAccountTableData] = useState<AccountTableType[]>(
-    []
-  );
   const router = useRouter();
   const { query } = router;
-  const { q, page } = query;
-  const infoService = useInfo();
-  const currPage = typeof page === 'string' ? page : page?.join('');
-
-  const { data: allUsers } = useQuery(['users', 'all'], () => {
-    return infoService?.getAllUsers();
-  });
-  const { data: allAccountData } = useQuery(['accounts', 'all'], () => {
-    return infoService?.getAllAccounts();
-  });
-  const { data: accountData } = useQuery(['account', currPage], () => {
-    return infoService?.getAccounts(currPage);
-  });
-  const totalItems = allAccountData?.length || 0;
-
+  const { active, broker, status } = query;
+  const { accountTableData, totalItems } = useAccountTable();
+  const [filteredData, setFilteredData] =
+    useState<AccountTableType[]>(accountTableData);
+  console.log(filteredData);
   useEffect(() => {
-    if (allUsers && accountData) {
-      const formattedTableData = formatAccountTableData(allUsers, accountData);
-      setAccountTableData(formattedTableData);
-    }
-  }, [allUsers, accountData]);
+    setFilteredData((prev) => {
+      let result = [...accountTableData];
+      if (broker && broker !== 'all') {
+        result = result.filter((item) => item.broker_name === broker);
+      }
+      if (status && status !== 'all') {
+        result = result.filter((item) => item.status === status);
+      }
+      if (active === 'active') result = result.filter((item) => item.is_active);
+      if (active === 'inactive') {
+        result = result.filter((item) => !item.is_active);
+      }
+      return result;
+    });
+  }, [active, broker, status, accountTableData]);
 
   return (
     <section className="bg-slate-100 flex-1 ">
       <Table
         column={tableColumns}
-        data={accountTableData}
+        data={filteredData}
         totalItems={totalItems}
       />
     </section>
