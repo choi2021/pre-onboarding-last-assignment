@@ -1,5 +1,5 @@
 import React from 'react';
-import { AccountTableType } from '../models/InfoTypes';
+import { AccountTableType } from '../../models/InfoTypes';
 
 interface AccountTableItemProps {
   item: AccountTableType;

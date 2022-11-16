@@ -2,12 +2,8 @@ import React, { useState } from 'react';
 import { BsArrowUp, BsTrash } from 'react-icons/bs';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import {
-  AccountTableType,
-  UserSettingType,
-  UserTableType,
-} from '../models/InfoTypes';
-import { useInfo } from '../hooks/useInfo';
+import { UserSettingType, UserTableType } from '../../models/InfoTypes';
+import { useInfo } from '../../hooks/useInfo';
 
 interface UserTableItemProps {
   item: UserTableType;
@@ -62,10 +58,12 @@ export default function UserTableItem({ item }: UserTableItemProps) {
       },
     }
   );
-  const { data }: { data: UserSettingType[] | undefined } = useQuery([
-    'usersetting',
-    'all',
-  ]);
+  const { data }: { data: UserSettingType[] | undefined } = useQuery(
+    ['usersetting', 'all'],
+    () => {
+      return infoService?.getAllUserSetting();
+    }
+  );
   const userSetting = data?.find((setting) => setting.uuid === uuid);
   const [userName, setUserName] = useState(name);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

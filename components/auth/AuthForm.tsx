@@ -65,6 +65,7 @@ export default function AuthForm({ name, isLogin, url }: AuthFormProps) {
         .then((data) => {
           if ('accessToken' in data) {
             localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('userId', data.user.id.toString());
             router.push('/');
           }
         })

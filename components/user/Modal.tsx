@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useInfo } from '../../hooks/useInfo';
+import { UserSettingType, UserType } from '../../models/InfoTypes';
 import ModalBtn from './ModalBtn';
-import { useInfo } from '../hooks/useInfo';
-import { UserSettingType, UserType } from '../models/InfoTypes';
 
 interface ModalProps {
   column: string[];

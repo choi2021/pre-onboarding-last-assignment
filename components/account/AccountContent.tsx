@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Table from './Table';
-import { AccountTableType } from '../models/InfoTypes';
-import { useAccountTable } from '../hooks/useAccountTable';
+import Table from '../Table';
+import { AccountTableType } from '../../models/InfoTypes';
+import { useAccountTable } from '../../hooks/useAccountTable';
 
 const tableColumns = [
   '고객명',
@@ -23,7 +23,6 @@ export default function AccountContent() {
   const { accountTableData, totalItems } = useAccountTable();
   const [filteredData, setFilteredData] =
     useState<AccountTableType[]>(accountTableData);
-  console.log(filteredData);
   useEffect(() => {
     setFilteredData((prev) => {
       let result = [...accountTableData];

@@ -14,7 +14,7 @@ interface PaginationProps {
 
 export default function Pagination({ totalItems }: PaginationProps) {
   const router = useRouter();
-  const { filter, q, page } = router.query;
+  const { page } = router.query;
   const [index, setIndex] = useState(0);
   const pages = [1, 2, 3, 4, 5].map((item) => index * PAGENATION + item);
   const totalPage = Math.ceil(totalItems / USER_NUM);
@@ -56,7 +56,13 @@ export default function Pagination({ totalItems }: PaginationProps) {
             return (
               <li key={item}>
                 <Link
-                  href={`?page=${item}&filter=${filter || ''}&q=${q || ''}`}
+                  href={{
+                    pathname: router.route,
+                    query: {
+                      ...router.query,
+                      page: item,
+                    },
+                  }}
                   className={`${
                     item.toString() === currPage && 'bg-blue-200'
                   } py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}

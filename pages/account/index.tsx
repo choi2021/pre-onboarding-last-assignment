@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountContent from '../../components/AccountContent';
+import AccountContent from '../../components/account/AccountContent';
 import MainLayout from '../../components/MainLayout';
 import SEO from '../../components/SEO';
 

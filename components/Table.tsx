@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { AccountTableType, UserTableType } from '../models/InfoTypes';
-import AccountTableItem from './AccountTableItem';
-import Modal from './Modal';
+import AccountTableItem from './account/AccountTableItem';
+import Modal from './user/Modal';
 import Pagination from './Pagination';
 import TableHeader from './TableHeader';
-import UserTableItem from './UserTableItem';
+import UserTableItem from './user/UserTableItem';
 
 interface TableProps {
   column: string[];

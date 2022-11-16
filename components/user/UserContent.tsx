@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { UserTableType } from '../models/InfoTypes';
-import Table from './Table';
-import { useFormatUserTable } from '../hooks/useUserTable';
+import { UserTableType } from '../../models/InfoTypes';
+import Table from '../Table';
+import { useFormatUserTable } from '../../hooks/useUserTable';
 
 const tableColumns = [
   '고객명',
