@@ -77,7 +77,7 @@ export default function UserTableItem({ item }: UserTableItemProps) {
   };
 
   const handleEdit = () => {
-    nameMutation.mutate({ id: item.id.toString(), name });
+    nameMutation.mutate({ id: item.id.toString(), name: userName });
     toggleIsModifying();
   };
 
@@ -87,7 +87,7 @@ export default function UserTableItem({ item }: UserTableItemProps) {
   };
 
   return (
-    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+    <tr className="bg-white border-b w-full dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
       <td className="py-1 text-center px-2">
         {isModifying ? (
           <div className="flex text-xs">

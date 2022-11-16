@@ -30,7 +30,7 @@ export default function AccountTableItem({ item }: AccountTableItemProps) {
     bgColor = 'bg-rose-500';
   }
   return (
-    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+    <tr className=" border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
       <Link href={`/${item.userId}`}>
         <td className="py-1 text-center px-2">{user_name}</td>
       </Link>
@@ -45,7 +45,7 @@ export default function AccountTableItem({ item }: AccountTableItemProps) {
       </td>
       <td className="py-1 text-center px-2">{payments}</td>
       <td className="py-1 text-center px-2">{is_active.toString()}</td>
-      <td className="py-1 text-center px-2">{created_at}</td>
+      <td className="py-1 text-center ">{created_at}</td>
     </tr>
   );
 }

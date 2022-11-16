@@ -18,13 +18,11 @@ export default function Table({ column, data, totalItems }: TableProps) {
     setIsModalShowing((prev) => !prev);
   };
   return (
-    <div className=" overflow-y-scroll h-full relative shadow-md sm:rounded-lg  ">
+    <div className=" h-full relative shadow-md sm:rounded-lg px-3 ">
       <TableHeader toggleModal={toggleModal} isModalShowing={isModalShowing} />
       {!isModalShowing && (
         <>
-          <table
-            className={`w-full text-sm text-gray-500 dark:text-gray-400 ' `}
-          >
+          <table className="bg-white w-full text-sm text-gray-500 dark:text-gray-400">
             <thead className="text-xstext-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 {column.map((item) => (
@@ -36,7 +34,7 @@ export default function Table({ column, data, totalItems }: TableProps) {
                 <th className="py-1  px-2 text-xs" />
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white">
               {data.map((item) => {
                 if (item.kind === 'user') {
                   return <UserTableItem key={item.id} item={item} />;
@@ -48,7 +46,7 @@ export default function Table({ column, data, totalItems }: TableProps) {
           <Pagination totalItems={totalItems} />
         </>
       )}
-      {isModalShowing && <Modal column={column} />}
+      {isModalShowing && <Modal toggleModal={toggleModal} />}
     </div>
   );
 }

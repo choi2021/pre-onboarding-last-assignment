@@ -6,8 +6,9 @@ import { UserSettingType, UserType } from '../../models/InfoTypes';
 import ModalBtn from './ModalBtn';
 
 interface ModalProps {
-  column: string[];
+  toggleModal: () => void;
 }
+
 const ModalBtns = [
   {
     name: 'allow_marketing_push',
@@ -23,7 +24,7 @@ const ModalBtns = [
   },
 ];
 
-export default function Modal({ column }: ModalProps) {
+export default function Modal({ toggleModal }: ModalProps) {
   const queryClient = useQueryClient();
   const infoService = useInfo();
   const router = useRouter();
@@ -34,6 +35,7 @@ export default function Modal({ column }: ModalProps) {
     },
     {
       onSuccess: () => {
+        queryClient.invalidateQueries(['users', 'all']);
         queryClient.invalidateQueries(['users', page]);
       },
     }
@@ -60,6 +62,8 @@ export default function Modal({ column }: ModalProps) {
     allow_invest_push: false,
     is_active: false,
     is_staff: false,
+    address: '',
+    detail_address: '',
   });
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,8 +84,8 @@ export default function Modal({ column }: ModalProps) {
       last_login: new Date().toString(),
       created_at: new Date().toString(),
       updated_at: new Date().toString(),
-      detail_address: '123',
-      address: '123',
+      detail_address: formInfo.detail_address,
+      address: formInfo.address,
     };
     const userSetting: UserSettingType = {
       id: Date.now(),
@@ -95,6 +99,7 @@ export default function Modal({ column }: ModalProps) {
     };
     userMutation.mutate(user);
     settingMutation.mutate(userSetting);
+    toggleModal();
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,14 +125,14 @@ export default function Modal({ column }: ModalProps) {
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-500 text-xs font-bold mb-2"
-            htmlFor="grid-first-name"
+            htmlFor="name"
           >
             Name
           </label>
           <input
             required
-            className="appearance-none block w-full bg-gray-200 text-gray-400 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="grid-first-name"
+            className="appearance-none block w-full bg-gray-200 text-gray-400  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            id="name"
             type="text"
             placeholder="Jane"
             name="name"
@@ -137,14 +142,14 @@ export default function Modal({ column }: ModalProps) {
         <div className="w-full md:w-1/2 px-3">
           <label
             className="block uppercase tracking-wide text-gray-400 text-xs font-bold mb-2"
-            htmlFor="grid-last-name"
+            htmlFor="email"
           >
             email
           </label>
           <input
             required
             className="appearance-none block w-full bg-gray-200 text-gray-400 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-last-name"
+            id="email"
             type="text"
             placeholder="x@xxx.com"
             name="email"
@@ -156,14 +161,14 @@ export default function Modal({ column }: ModalProps) {
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-400 text-xs font-bold mb-2"
-            htmlFor="grid-state"
+            htmlFor="genderOrigin"
           >
             성별코드
           </label>
           <div className="relative">
             <select
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-400 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="grid-state"
+              id="genderOrigin"
               onChange={handleSelectChange}
               name="gender_origin"
             >
@@ -186,12 +191,13 @@ export default function Modal({ column }: ModalProps) {
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-password"
+            htmlFor="birthDate"
           >
             생년월일
           </label>
           <input
             required
+            id="birthDate"
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             type="date"
             placeholder="yyyy-mm-dd "
@@ -204,12 +210,13 @@ export default function Modal({ column }: ModalProps) {
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-city"
+            htmlFor="age"
           >
             나이
           </label>
           <input
             required
+            id="age"
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             type="text"
             placeholder=""
@@ -220,7 +227,7 @@ export default function Modal({ column }: ModalProps) {
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-city"
+            htmlFor="phone_number"
           >
             휴대폰번호
           </label>
@@ -230,13 +237,14 @@ export default function Modal({ column }: ModalProps) {
             type="text"
             placeholder="xxx-xxxx-xxx"
             name="phone_number"
+            id="phone_number"
             onChange={handleInputChange}
           />
         </div>
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-city"
+            htmlFor="password"
           >
             비밀번호
           </label>
@@ -245,6 +253,39 @@ export default function Modal({ column }: ModalProps) {
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             type="password"
             name="password"
+            id="password"
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="address"
+          >
+            주소
+          </label>
+          <input
+            required
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="text"
+            name="address"
+            id="address"
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="detailAddress"
+          >
+            상세주소
+          </label>
+          <input
+            required
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="text"
+            id="detailAddress"
+            name="detail_address"
             onChange={handleInputChange}
           />
         </div>

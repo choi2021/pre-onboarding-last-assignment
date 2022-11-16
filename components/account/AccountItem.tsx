@@ -39,7 +39,7 @@ export default function AccountItem({ account }: { account: AccountType }) {
     created_at: formatDate(created_at),
   };
   return (
-    <section className="px-2 py-3 border-t-2 border-t-slate-300">
+    <section className="w-full border-t-2 border-t-slate-300">
       <h1 className="mb-3">{account.name}</h1>
       <ul className="grid grid-cols-3 gap-2 ">
         {accountInfoArray.map((item) => (

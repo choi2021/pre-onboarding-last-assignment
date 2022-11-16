@@ -11,7 +11,7 @@ export default function MainLayout({
   return (
     <div className="flex w-screen h-screen">
       <Sidebar />
-      <main className="flex flex-col w-5/6 bg-white h-full overflow-hidden">
+      <main className="flex flex-col w-5/6 bg-white h-full ">
         <MainHeader />
         {children}
         <Footer />
