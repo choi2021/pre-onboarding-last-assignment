@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInstance } from 'axios';
 import HTTPError from './httpError';
 
 const ACCESS_TOKEN = 'accessToken';
-
+const USER_ID = 'userId';
 export default class HttpClient {
   httpClient: AxiosInstance;
 
@@ -16,11 +16,18 @@ export default class HttpClient {
         if (error instanceof AxiosError) {
           const { response } = error;
           if (response) {
-            throw new HTTPError(
-              response?.status,
-              response?.statusText,
-              response.data
-            );
+            const { status } = response;
+            if (status === 401) {
+              localStorage.removeItem(ACCESS_TOKEN);
+              localStorage.removeItem(USER_ID);
+              window.location.replace('/login');
+            } else {
+              throw new HTTPError(
+                response?.status,
+                response?.statusText,
+                response.data
+              );
+            }
           }
         }
         throw new Error('Server Error');

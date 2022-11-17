@@ -1,16 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   AiOutlineUser,
   AiOutlineDashboard,
   AiOutlineBank,
 } from 'react-icons/ai';
-import { CiMoneyBill } from 'react-icons/ci';
+
 import { FiLogOut } from 'react-icons/fi';
-import { useInfo } from '../hooks/useInfo';
-import { AccountType } from '../models/InfoTypes';
 import Header from './Header';
 import MenuItem from './MenuItem';
 
@@ -24,6 +21,7 @@ export default function Sidebar() {
     localStorage.removeItem('userId');
     localStorage.removeItem('accessToken');
   };
+
   return (
     <aside className="w-1/6 bg-slate-800 flex flex-col  ">
       <Header />

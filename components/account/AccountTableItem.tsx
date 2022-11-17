@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { AccountTableType } from '../../models/InfoTypes';
 
@@ -29,15 +30,30 @@ export default function AccountTableItem({ item }: AccountTableItemProps) {
   if (profit === 'up') {
     bgColor = 'bg-rose-500';
   }
+  const router = useRouter();
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { name: btnName } = e.currentTarget;
+    if (btnName === 'userDetail') {
+      router.push(`/${item.userId}`);
+    } else {
+      router.push(`/account/${item.id}`);
+    }
+  };
+
   return (
     <tr className=" border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-      <Link href={`/${item.userId}`}>
-        <td className="py-1 text-center px-2">{user_name}</td>
-      </Link>
+      <td className="py-1 text-center px-2">
+        <button type="button" onClick={handleClick} name="userDetail">
+          {user_name}
+        </button>
+      </td>
       <td className="py-1 text-center px-2">{broker_name}</td>
-      <Link href={`/account/${item.id}`}>
-        <td className="py-1 text-center px-2">{number}</td>
-      </Link>
+      <td className="py-1 text-center px-2">
+        <button type="button" onClick={handleClick} name="accountDetail">
+          {number}
+        </button>
+      </td>
       <td className="py-1 text-center px-2">{status}</td>
       <td className="py-1 text-center px-2">{name}</td>
       <td className={`${bgColor} text-slate-100 py-1 text-center px-2`}>

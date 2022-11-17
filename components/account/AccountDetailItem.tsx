@@ -3,7 +3,7 @@ import { AccountType } from '../../models/InfoTypes';
 import { accountStatus, broker } from '../../models/variables';
 import { formatDate } from '../../utils/formatDate';
 import { maskAccountNumber } from '../../utils/maskNumber';
-import UserInfoItem from '../user/UserInfoItem';
+import InfoItem from '../InfoItem';
 
 const accountInfoArray = [
   { name: '브로커명', key: 'broker_name' },
@@ -26,7 +26,11 @@ type AccountInfoType = {
   created_at: string;
 };
 
-export default function AccountItem({ account }: { account: AccountType }) {
+export default function AccountDetailItem({
+  account,
+}: {
+  account: AccountType;
+}) {
   const { broker_id, number, status, assets, payments, is_active, created_at } =
     account;
   const formattedAccount: AccountInfoType = {
@@ -39,11 +43,11 @@ export default function AccountItem({ account }: { account: AccountType }) {
     created_at: formatDate(created_at),
   };
   return (
-    <section className="w-full border-t-2 border-t-slate-300">
+    <section className="w-full border-t-2 border-t-slate-300 px-3">
       <h1 className="mb-3">{account.name}</h1>
       <ul className="grid grid-cols-3 gap-2 ">
         {accountInfoArray.map((item) => (
-          <UserInfoItem
+          <InfoItem
             key={item.key}
             name={item.name}
             value={formattedAccount[item.key]}

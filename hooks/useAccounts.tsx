@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { useDeleteToken } from './useDeleteToken';
 import { InfoService } from '../models/InfoTypes';
 
 export const useAccountsOnPage = (
@@ -12,15 +11,9 @@ export const useAccountsOnPage = (
 };
 
 export const useAllAccounts = (infoService: InfoService) => {
-  return useQuery(
-    ['accounts', 'all'],
-    () => {
-      return infoService?.getAllAccounts();
-    },
-    {
-      onError: useDeleteToken,
-    }
-  );
+  return useQuery(['accounts', 'all'], () => {
+    return infoService?.getAllAccounts();
+  });
 };
 
 export const useTargetAccount = (

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { UserSettingType } from '../models/InfoTypes';
+import { UserSettingType, UserType } from '../models/InfoTypes';
 import { useInfo } from './useInfo';
 import { useAllUserSetting } from './useUserSetting';
 
@@ -19,7 +19,6 @@ const useModifyUser = (uuid: string) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['users', page]);
-        queryClient.invalidateQueries(['users', 'all']);
       },
     }
   );

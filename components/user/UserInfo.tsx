@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useInfo } from '../../hooks/useInfo';
-import AccountList from '../account/AccountList';
+import AccountDetailList from '../account/AccountDetailList';
 import UserInfoList from './UserInfoList';
 
 export default function UserInfo() {
@@ -26,7 +26,7 @@ export default function UserInfo() {
         사용자 정보
       </h1>
       {user && <UserInfoList user={user} />}
-      {accounts && <AccountList accounts={accounts} />}
+      {accounts && <AccountDetailList accounts={accounts} />}
     </section>
   );
 }

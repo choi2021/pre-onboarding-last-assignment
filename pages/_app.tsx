@@ -1,4 +1,8 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useEffect } from 'react';
@@ -10,8 +14,6 @@ import AuthServiceImpl from '../services/AuthService';
 import InfoServiceImpl from '../services/InfoService';
 import '../styles/globals.css';
 
-const ACCESS_TOKEN = 'accessToken';
-
 function App({ Component, pageProps }: AppProps) {
   const client = new HttpClient(process.env.NEXT_PUBLIC_BASE_URL || '');
   const authService = new AuthServiceImpl(client.httpClient);
@@ -19,25 +21,30 @@ function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 5000,
-        cacheTime: 3600,
+        staleTime: 3000,
+        cacheTime: 360000,
+        keepPreviousData: true,
+        refetchOnMount: true,
       },
     },
   });
 
   const router = useRouter();
   useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
+    const token = localStorage.getItem('accessToken');
     if (!token) {
       router.push('/login');
     }
   }, []);
+
   return (
     <AuthProvider authService={authService}>
       <InfoProvider infoService={infoService}>
         <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <Component {...pageProps} />
+          <Hydrate state={pageProps.dehydratedState}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <Component {...pageProps} />
+          </Hydrate>
         </QueryClientProvider>
       </InfoProvider>
     </AuthProvider>

@@ -44,7 +44,7 @@ const formatAccountTableData = (
       payments: Math.floor(+payments).toLocaleString(),
       is_active: formatBoolean(is_active),
       created_at: formatDate(created_at),
-      id: id + broker_id,
+      id: `${id}-${user_id}`,
       userId: findUserId(user_id, allUsers),
       kind: 'account',
       profit: calculateProfit(assets, payments),

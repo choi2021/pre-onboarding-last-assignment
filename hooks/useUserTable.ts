@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useInfo } from './useInfo';
 import { formatUserTableData } from '../utils/formatUserTableData';
 import { UserTableType } from '../models/InfoTypes';
-import { useAllUser, useTargetUser, useUsersOnPage } from './useUsers';
+import { useTargetUser, useUsersOnPage } from './useUsers';
 import { useAllUserSetting, useUserSettingOnPage } from './useUserSetting';
 import { useAllAccounts } from './useAccounts';
 
@@ -20,7 +20,6 @@ export const useFormatUserTable = () => {
   const { data: settingData } = useUserSettingOnPage(currPage, infoService);
   const { data: allAccountData } = useAllAccounts(infoService);
   const { data: allUserSetting } = useAllUserSetting(infoService);
-
   useEffect(() => {
     if (!q) {
       if (userData && settingData && allAccountData) {
