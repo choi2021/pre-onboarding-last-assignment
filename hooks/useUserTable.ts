@@ -1,9 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useInfo } from './useInfo';
 import { formatUserTableData } from '../utils/formatUserTableData';
 import { UserTableType } from '../models/InfoTypes';
+import { useAllUser, useTargetUser, useUsersOnPage } from './useUsers';
+import { useAllUserSetting, useUserSettingOnPage } from './useUserSetting';
+import { useAllAccounts } from './useAccounts';
 
 export const useFormatUserTable = () => {
   const [userTableData, setUserTableData] = useState<UserTableType[]>([]);
@@ -12,22 +14,12 @@ export const useFormatUserTable = () => {
   const query = typeof q === 'string' ? q : q?.join('');
   const currPage = typeof page === 'string' ? page : page?.join('');
   const infoService = useInfo();
-  const { data: userData } = useQuery(['users', currPage], () => {
-    return infoService?.getUsers(currPage);
-  });
-  const { data: settingData } = useQuery(['userSetting', currPage], () => {
-    return infoService?.getUserSetting(currPage);
-  });
-  const { data: allAccountData } = useQuery(['accounts', 'all'], () => {
-    return infoService?.getAllAccounts();
-  });
 
-  const { data: targetUser } = useQuery(['user', query], () => {
-    return infoService?.getTargetUser(query);
-  });
-  const { data: allUserSetting } = useQuery(['usersetting', 'all'], () => {
-    return infoService?.getAllUserSetting();
-  });
+  const { data: userData } = useUsersOnPage(currPage, infoService);
+  const { data: targetUser } = useTargetUser(query, infoService);
+  const { data: settingData } = useUserSettingOnPage(currPage, infoService);
+  const { data: allAccountData } = useAllAccounts(infoService);
+  const { data: allUserSetting } = useAllUserSetting(infoService);
 
   useEffect(() => {
     if (!q) {

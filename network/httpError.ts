@@ -55,4 +55,15 @@ export default class HTTPError extends Error {
     }
     return this.message;
   }
+
+  get APIMessage() {
+    switch (this.statusCode) {
+      case 401:
+        this.message = 'Access Token이 만료되었습니다.';
+        break;
+      default:
+        throw new Error('Unknown Error');
+    }
+    return this.message;
+  }
 }

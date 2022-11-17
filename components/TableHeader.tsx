@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { AiOutlineSearch } from 'react-icons/ai';
 import TableSelect from './TableSelect';
 import { SelectType } from '../models/InfoTypes';
-import { AiOutlineSearch } from 'react-icons/ai';
 
 interface TableHeaderProps {
   isModalShowing: boolean;

@@ -2,18 +2,15 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { UserSettingType } from '../models/InfoTypes';
 import { useInfo } from './useInfo';
+import { useAllUserSetting } from './useUserSetting';
 
 const useModifyTableItem = (uuid: string) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { page } = router.query;
   const infoService = useInfo();
-  const { data }: { data: UserSettingType[] | undefined } = useQuery(
-    ['usersetting', 'all'],
-    () => {
-      return infoService?.getAllUserSetting();
-    }
-  );
+  const { data }: { data: UserSettingType[] | undefined } =
+    useAllUserSetting(infoService);
   const userSetting = data?.find((setting) => setting.uuid === uuid);
   const userMutation = useMutation(
     async (userId: string) => {
