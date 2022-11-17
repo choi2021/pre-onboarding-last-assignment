@@ -7,287 +7,88 @@ import {
   UserSettingType,
   UserType,
 } from '../models/InfoTypes';
-import HTTPError from '../network/httpError';
 
 export default class InfoServiceImpl implements InfoService {
   constructor(private httpClient: AxiosInstance) {}
 
   async getUsers(page?: string) {
-    try {
-      const { data } = await this.httpClient.get<UserResponse>(
-        `api/users?_page=${page}&_limit=15`
-      );
-      return await data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    const { data } = await this.httpClient.get<UserResponse>(
+      `api/users?_page=${page}&_limit=15`
+    );
+    return data;
   }
 
   async getUserSetting(page?: string) {
-    try {
-      const { data } = await this.httpClient.get<UserSettingResponse>(
-        `api/userSetting?_page=${page}&_limit=15`
-      );
-      return await data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    const { data } = await this.httpClient.get<UserSettingResponse>(
+      `api/userSetting?_page=${page}&_limit=15`
+    );
+    return data;
   }
 
   async getAccounts(page?: string) {
-    try {
-      const { data } = await this.httpClient.get<AccountResponse>(
-        `api/accounts?_page=${page}&_limit=15`
-      );
-      return await data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    const { data } = await this.httpClient.get<AccountResponse>(
+      `api/accounts?_page=${page}&_limit=15`
+    );
+    return data;
   }
 
   async getAllUsers() {
-    try {
-      const { data } = await this.httpClient.get<UserResponse>(`api/users`);
-      return await data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    const { data } = await this.httpClient.get<UserResponse>(`api/users`);
+    return data;
   }
 
   async getAllAccounts() {
-    try {
-      const { data } = await this.httpClient.get<AccountResponse>(
-        `api/accounts`
-      );
-      return await data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    const { data } = await this.httpClient.get<AccountResponse>(`api/accounts`);
+    return data;
   }
 
   async getAllUserSetting() {
-    try {
-      const { data } = await this.httpClient.get<UserSettingResponse>(
-        `api/userSetting`
-      );
-      return await data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    const { data } = await this.httpClient.get<UserSettingResponse>(
+      `api/userSetting`
+    );
+    return data;
   }
 
   async getTargetUser(q?: string) {
-    try {
-      const { data } = await this.httpClient.get<UserResponse>(
-        `api/users?q=${q}`
-      );
-      return await data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    const { data } = await this.httpClient.get<UserResponse>(
+      `api/users?q=${q}`
+    );
+    return data;
   }
 
   async getTargetAccount(q?: string) {
-    try {
-      const { data } = await this.httpClient.get<AccountResponse>(
-        `api/accounts?q=${q}`
-      );
-      return await data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    const { data } = await this.httpClient.get<AccountResponse>(
+      `api/accounts?q=${q}`
+    );
+    return data;
   }
 
   async getTargetUserSetting(q?: string) {
-    try {
-      const { data } = await this.httpClient.get<UserSettingResponse>(
-        `api/userSetting?q=${q}`
-      );
-      return await data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    const { data } = await this.httpClient.get<UserSettingResponse>(
+      `api/userSetting?q=${q}`
+    );
+    return data;
   }
 
   async patchUserName({ name, id }: { name: string; id: string }) {
-    try {
-      return await this.httpClient.patch(`api/users/${id}`, {
-        name,
-      });
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    return this.httpClient.patch(`api/users/${id}`, {
+      name,
+    });
   }
 
   async deleteUser(id: string) {
-    try {
-      return await this.httpClient.delete(`api/users/${id}`);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    return this.httpClient.delete(`api/users/${id}`);
   }
 
   async deleteUserSetting(id: string) {
-    try {
-      return await this.httpClient.delete(`api/userSetting/${id}`);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    return this.httpClient.delete(`api/userSetting/${id}`);
   }
 
   async postUser(user: UserType) {
-    try {
-      return await this.httpClient.post(`api/users`, user);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    return this.httpClient.post(`api/users`, user);
   }
 
   async postSetting(setting: UserSettingType) {
-    try {
-      return await this.httpClient.post(`api/userSetting`, setting);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { response } = error;
-        if (response) {
-          throw new HTTPError(
-            response?.status,
-            response?.statusText,
-            response.data
-          );
-        }
-      }
-    }
-    throw new Error('Server Error');
+    return this.httpClient.post(`api/userSetting`, setting);
   }
 }

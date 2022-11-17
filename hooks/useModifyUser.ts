@@ -4,7 +4,7 @@ import { UserSettingType } from '../models/InfoTypes';
 import { useInfo } from './useInfo';
 import { useAllUserSetting } from './useUserSetting';
 
-const useModifyTableItem = (uuid: string) => {
+const useModifyUser = (uuid: string) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { page } = router.query;
@@ -12,7 +12,7 @@ const useModifyTableItem = (uuid: string) => {
   const { data }: { data: UserSettingType[] | undefined } =
     useAllUserSetting(infoService);
   const userSetting = data?.find((setting) => setting.uuid === uuid);
-  const userMutation = useMutation(
+  const userDeleteMutation = useMutation(
     async (userId: string) => {
       return infoService?.deleteUser(userId);
     },
@@ -23,7 +23,7 @@ const useModifyTableItem = (uuid: string) => {
       },
     }
   );
-  const settingMutation = useMutation(
+  const settingDeleteMutation = useMutation(
     async (userId: string) => {
       return infoService?.deleteUserSetting(userId);
     },
@@ -44,7 +44,12 @@ const useModifyTableItem = (uuid: string) => {
     }
   );
 
-  return { userSetting, userMutation, settingMutation, nameMutation };
+  return {
+    userSetting,
+    userDeleteMutation,
+    settingDeleteMutation,
+    nameMutation,
+  };
 };
 
-export { useModifyTableItem };
+export { useModifyUser };

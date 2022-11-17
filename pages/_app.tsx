@@ -16,7 +16,14 @@ function App({ Component, pageProps }: AppProps) {
   const client = new HttpClient(process.env.NEXT_PUBLIC_BASE_URL || '');
   const authService = new AuthServiceImpl(client.httpClient);
   const infoService = new InfoServiceImpl(client.withToken());
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 5000,
+        cacheTime: 3600,
+      },
+    },
+  });
 
   const router = useRouter();
   useEffect(() => {

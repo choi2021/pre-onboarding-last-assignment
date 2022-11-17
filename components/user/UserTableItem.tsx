@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BsArrowUp, BsTrash } from 'react-icons/bs';
 import Link from 'next/link';
 import { UserTableType } from '../../models/InfoTypes';
-import { useModifyTableItem } from '../../hooks/useModifyTableItem';
+import { useModifyUser } from '../../hooks/useModifyUser';
 
 interface UserTableItemProps {
   item: UserTableType;
@@ -33,16 +33,20 @@ export default function UserTableItem({ item }: UserTableItemProps) {
   const toggleIsModifying = () => {
     setIsModifying((prev) => !prev);
   };
-  const { userSetting, userMutation, settingMutation, nameMutation } =
-    useModifyTableItem(uuid);
+  const {
+    userSetting,
+    userDeleteMutation,
+    settingDeleteMutation,
+    nameMutation,
+  } = useModifyUser(uuid);
   const handleEdit = () => {
     nameMutation.mutate({ id: item.id.toString(), name: userName });
     toggleIsModifying();
   };
 
   const handleDelete = () => {
-    userMutation.mutate(item.id.toString());
-    settingMutation.mutate(userSetting?.id.toString() || '');
+    userDeleteMutation.mutate(item.id.toString());
+    settingDeleteMutation.mutate(userSetting?.id.toString() || '');
   };
 
   return (
