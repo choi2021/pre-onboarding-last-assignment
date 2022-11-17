@@ -8,10 +8,3 @@ function formatDate(date: string) {
 }
 
 export { formatDate };
-
-//  const formattedDate = targetDate.toLocaleDateString('ko', {
-//    day: 'numeric',
-//    month: 'long',
-//    weekday: 'long',
-//  });
-//  return formattedDate;

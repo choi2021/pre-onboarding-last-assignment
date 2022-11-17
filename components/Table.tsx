@@ -5,11 +5,13 @@ import Modal from './user/Modal';
 import Pagination from './Pagination';
 import TableHeader from './TableHeader';
 import UserTableItem from './user/UserTableItem';
+import THead from './THead';
+import TBody from './TBody';
 
 interface TableProps {
-  column: string[];
   data: UserTableType[] | AccountTableType[];
   totalItems: number;
+  column: string[];
 }
 
 export default function Table({ column, data, totalItems }: TableProps) {
@@ -23,25 +25,8 @@ export default function Table({ column, data, totalItems }: TableProps) {
       {!isModalShowing && (
         <>
           <table className="bg-white w-full text-sm text-gray-500 dark:text-gray-400">
-            <thead className="text-xstext-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                {column.map((item) => (
-                  <th key={item} className="py-1 text-center px-2  text-xs">
-                    {item}
-                  </th>
-                ))}
-                <th className="py-1  px-2 text-xs" />
-                <th className="py-1  px-2 text-xs" />
-              </tr>
-            </thead>
-            <tbody className="bg-white">
-              {data.map((item) => {
-                if (item.kind === 'user') {
-                  return <UserTableItem key={item.id} item={item} />;
-                }
-                return <AccountTableItem key={item.id} item={item} />;
-              })}
-            </tbody>
+            <THead column={column} />
+            <TBody data={data} />
           </table>
           <Pagination totalItems={totalItems} />
         </>

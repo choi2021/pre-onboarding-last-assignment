@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { BsArrowUp, BsTrash } from 'react-icons/bs';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { UserSettingType, UserTableType } from '../../models/InfoTypes';
-import { useInfo } from '../../hooks/useInfo';
+import { UserTableType } from '../../models/InfoTypes';
+import { useModifyTableItem } from '../../hooks/useModifyTableItem';
 
 interface UserTableItemProps {
   item: UserTableType;
@@ -26,47 +24,7 @@ export default function UserTableItem({ item }: UserTableItemProps) {
     id,
   } = item;
   const [isModifying, setIsModifying] = useState(false);
-  const queryClient = useQueryClient();
-  const router = useRouter();
-  const { page } = router.query;
-  const infoService = useInfo();
-  const userMutation = useMutation(
-    async (userId: string) => {
-      return infoService?.deleteUser(userId);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['users', page]);
-      },
-    }
-  );
-  const settingMutation = useMutation(
-    async (userId: string) => {
-      return infoService?.deleteUserSetting(userId);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['userSetting', 'all']);
-      },
-    }
-  );
-  const nameMutation = useMutation(
-    async (info: { name: string; id: string }) => {
-      return infoService?.patchUserName(info);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['users', page]);
-      },
-    }
-  );
-  const { data }: { data: UserSettingType[] | undefined } = useQuery(
-    ['usersetting', 'all'],
-    () => {
-      return infoService?.getAllUserSetting();
-    }
-  );
-  const userSetting = data?.find((setting) => setting.uuid === uuid);
+
   const [userName, setUserName] = useState(name);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -75,7 +33,8 @@ export default function UserTableItem({ item }: UserTableItemProps) {
   const toggleIsModifying = () => {
     setIsModifying((prev) => !prev);
   };
-
+  const { userSetting, userMutation, settingMutation, nameMutation } =
+    useModifyTableItem(uuid);
   const handleEdit = () => {
     nameMutation.mutate({ id: item.id.toString(), name: userName });
     toggleIsModifying();

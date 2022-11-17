@@ -19,18 +19,6 @@ export default function Sidebar() {
   const { route } = router;
   const isUser = route === '/';
   const isAccount = route === '/account';
-  const infoService = useInfo();
-  const { data: allAccountData } = useQuery(['accounts', 'all'], () => {
-    return infoService?.getAllAccounts();
-  });
-  let accounts: AccountType[] = [];
-  useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      accounts =
-        allAccountData?.filter((item) => item.user_id === +userId) || [];
-    }
-  }, []);
 
   const handleClick = () => {
     localStorage.removeItem('userId');
@@ -43,29 +31,23 @@ export default function Sidebar() {
         <MenuItem text="대시보드">
           <AiOutlineDashboard className="mr-2" />
         </MenuItem>
-        <ul className="w-full h-10 flex justify-between items-center text-indigo-400 cursor-pointer">
-          <Link
-            href="/account"
-            className={`w-full ${isAccount && 'bg-blue-900 text-white'} `}
-          >
-            <MenuItem text="계좌목록">
-              <AiOutlineBank className="mr-2" />
-            </MenuItem>
-          </Link>
-          {accounts.map((item) => (
-            <Link href={`/account/${item.id}`}>
-              <MenuItem text={item.name}>
-                <CiMoneyBill />
-              </MenuItem>
-            </Link>
-          ))}
-        </ul>
-        <Link href="/" className={`${isUser && 'bg-blue-900 text-slate-300'}`}>
+        <Link
+          href="/account"
+          className={`w-full ${isAccount && 'bg-blue-900 '}  hover:bg-blue-900`}
+        >
+          <MenuItem text="계좌목록">
+            <AiOutlineBank className="mr-2" />
+          </MenuItem>
+        </Link>
+        <Link
+          href="/"
+          className={`${isUser && 'bg-blue-900 '} hover:bg-blue-900`}
+        >
           <MenuItem text="사용자">
             <AiOutlineUser className="mr-2" />
           </MenuItem>
         </Link>
-        <Link href="/login" onClick={handleClick}>
+        <Link href="/login" onClick={handleClick} className="hover:bg-blue-900">
           <MenuItem text="로그아웃">
             <FiLogOut className="mr-2" />
           </MenuItem>
