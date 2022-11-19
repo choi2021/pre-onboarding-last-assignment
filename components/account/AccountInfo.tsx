@@ -8,12 +8,19 @@ export default function AccountInfo() {
   const router = useRouter();
   const { id } = router.query;
   const infoService = useInfo();
-  const { data: allAccounts } = useQuery(['accounts', 'all'], () => {
-    return infoService?.getAllAccounts();
-  });
-  const account = allAccounts?.find((item) => {
-    return `${item.id}-${item.user_id}` === id;
-  });
+  const { data: account } = useQuery(
+    ['accounts', 'all'],
+    () => {
+      return infoService?.getAllAccounts();
+    },
+    {
+      select: (data) =>
+        data.find((item) => {
+          return `${item.id}-${item.user_id}` === id;
+        }),
+    }
+  );
+
   return (
     <section className="text-gray-600 bg-slate-100 h-full  overflow-y-auto">
       <h1 className="p-2 text-lg font-medium title-font mb-4 text-gray-700">

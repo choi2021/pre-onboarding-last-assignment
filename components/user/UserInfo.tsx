@@ -9,15 +9,19 @@ export default function UserInfo() {
   const router = useRouter();
   const { id } = router.query;
   const infoService = useInfo();
-  const { data: allUsers } = useQuery(['users', 'all'], () => {
-    return infoService?.getAllUsers();
-  });
-  const { data: allAccounts } = useQuery(['accounts', 'all'], () => {
-    return infoService?.getAllAccounts();
-  });
-  const user = allUsers?.find((item) => item.id.toString() === id);
-  const accounts = allAccounts?.filter(
-    (item) => item.user_id.toString() === id
+  const { data: user } = useQuery(
+    ['users', 'all'],
+    () => {
+      return infoService?.getAllUsers();
+    },
+    { select: (data) => data.find((item) => item.id.toString() === id) }
+  );
+  const { data: accounts } = useQuery(
+    ['accounts', 'all'],
+    () => {
+      return infoService?.getAllAccounts();
+    },
+    { select: (data) => data.filter((item) => item.user_id.toString() === id) }
   );
 
   return (
