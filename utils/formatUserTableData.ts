@@ -20,14 +20,17 @@ function formatUserTableData(
 ) {
   const { length } = settingData;
   const tableData = Array(length);
-  const accountCount: AccountCountType = {};
-  accountData.forEach((item) => {
-    const id = item.user_id;
-    if (!accountCount[id]) {
-      accountCount[id] = 1;
-    }
-    accountCount[id] += 1;
-  });
+  const accountCount: AccountCountType = accountData.reduce(
+    (allAcount: AccountCountType, account) => {
+      if (account.user_id in allAcount) {
+        allAcount[account.user_id]++;
+      } else {
+        allAcount[account.user_id] = 1;
+      }
+      return allAcount;
+    },
+    {}
+  );
 
   settingData.forEach((item, idx) => {
     const {
